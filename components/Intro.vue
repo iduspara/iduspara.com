@@ -8,6 +8,7 @@ import Progressbar from './Progressbar.vue';
           src="/images/avatar.jpg"
           sizes="sm:100vw md:50vw lg:430px"
           class=""
+          alt="Profile of Igor Duspara"
         />
       </div>
       <div class="lg:flex-1 px-6">
@@ -29,6 +30,7 @@ import Progressbar from './Progressbar.vue';
         <h3>Contact:</h3>
         <div class="flex flex-row text-4xl gap-4 justify-between mb-10">
           <a
+            alt="My E-Mail"
             href="mailto:igor.duspara@gmail.com"
             target="_blank"
             class="ring-1 ring-gray-600 flex items-center justify-center p-4 rounded w-full hover:ring-green-400 hover:text-green-400"
@@ -36,6 +38,7 @@ import Progressbar from './Progressbar.vue';
             <font-awesome-icon icon="fa-regular fa-envelope" class="fa-fw"
           /></a>
           <a
+            alt="My Xing Profile link"
             href="https://www.xing.com/profile/Igor_Duspara"
             target="_blank"
             class="ring-1 ring-gray-600 flex items-center justify-center p-4 rounded w-full hover:ring-green-400 hover:text-green-400"
@@ -43,6 +46,7 @@ import Progressbar from './Progressbar.vue';
             <font-awesome-icon icon="fa-brands fa-xing" class="fa-fw"
           /></a>
           <a
+            alt="My Github profile link"
             href="https://github.com/igor-duspara"
             target="_blank"
             class="ring-1 ring-gray-600 flex items-center justify-center p-4 rounded w-full hover:ring-green-400 hover:text-green-400"
