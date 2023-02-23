@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-size: 16px;
+    @apply text-gray-700 print:text-sm;
+  }
+  h1 {
+    @apply text-4xl mb-3 lg:text-5xl lg:mb-4;
+  }
+
+  h2 {
+    @apply text-2xl mb-1 lg:text-3xl lg:mb-2;
+  }
+
+  h3 {
+    @apply mb-2;
+  }
+
+  p {
+    @apply my-5;
+  }
+
+  a {
+    @apply hover:text-green-400;
+  }
+}

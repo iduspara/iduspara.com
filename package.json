@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-brands-svg-icons": "^6.3.0",
+    "@fortawesome/free-regular-svg-icons": "^6.3.0",
+    "@fortawesome/vue-fontawesome": "^3.0.3"
+  },
+  "devDependencies": {
+    "@nuxt/image-edge": "^1.0.0-27919678.2f5b64b",
+    "@nuxtjs/google-fonts": "^3.0.0-1",
+    "@nuxtjs/tailwindcss": "^6.4.1",
+    "@tailwindcss/typography": "^0.5.9",
+    "nuxt": "^3.2.2"
+  }
+}
