@@ -3,6 +3,9 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: "Igor Duspara - Full-Stack Developer",
+      htmlAttrs: {
+        lang: "en",
+      },
       meta: [
         {
           name: "description",
