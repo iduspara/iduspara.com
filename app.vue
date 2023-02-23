@@ -66,6 +66,8 @@
         </article>
         <h2 class="mb-5">Berufserfahrung:</h2>
         <Jobs class="mb-20 print:mb-4" />
+        <h2 class="mb-5">Auszeichnungen:</h2>
+        <Certificates class="mb-20 print:mb-4" />
         <h2 class="mb-5">Schule & Studium:</h2>
         <School class="mb-20 print:mb-4" />
         <h2 class="mb-5">
