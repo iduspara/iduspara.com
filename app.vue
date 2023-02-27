@@ -76,7 +76,9 @@
         </h2>
         <Skills class="mb-20 print:mb-4" />
         <h2 class="mb-5">Sprachen</h2>
-        <dl class="mt-4 grid grid-cols-3 overflow-hidden rounded-xl divide-x-2">
+        <dl
+          class="mt-4 grid grid-cols-3 overflow-hidden rounded-xl divide-x-2 mb-10"
+        >
           <div class="flex flex-col text-gray-800">
             <dt class="text-sm leading-6">Muttersprache</dt>
             <dd class="order-first text-2xl">Kroatisch</dd>

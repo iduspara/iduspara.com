@@ -21,12 +21,12 @@ import Progressbar from './Progressbar.vue';
         >
           <div class="flex flex-col bg-white/5 print:bg-gray-200 p-4">
             <dt class="text-sm leading-6 text-gray-300 print:text-gray-800">
-              33 Jahre
+              Alter
             </dt>
             <dd
               class="order-first text-3xl tracking-tight text-white print:text-gray-700"
             >
-              Alter
+              33 Jahre
             </dd>
           </div>
           <div class="flex flex-col bg-white/5 print:bg-gray-200 p-4">
@@ -62,16 +62,6 @@ import Progressbar from './Progressbar.vue';
         </dl>
       </div>
       <div class="px-6">
-        <h2 class="text-xl">Mein Daily Tech-Stack:</h2>
-        <ul class="mt-4 space-y-4 mb-10">
-          <li><Progressbar label="CSS" percentage="95" /></li>
-          <li><Progressbar label="Vue" percentage="90" /></li>
-          <li><Progressbar label="HTML" percentage="90" /></li>
-          <li><Progressbar label="JavaScript" percentage="85" /></li>
-          <li><Progressbar label="PHP" percentage="70" /></li>
-          <li><Progressbar label="SQL" percentage="50" /></li>
-          <li><Progressbar label="React" percentage="30" /></li>
-        </ul>
         <h2 class="text-xl">Kontakt:</h2>
         <div
           class="print:hidden flex flex-row text-4xl gap-4 justify-between mb-10"
@@ -114,6 +104,16 @@ import Progressbar from './Progressbar.vue';
           <li>E-mail: igor.duspara@gmail.com</li>
           <li>Github: igor-duspara</li>
           <li>Xing: Igor_Duspara</li>
+        </ul>
+        <h2 class="text-xl">Mein Daily Tech-Stack:</h2>
+        <ul class="mt-4 space-y-4 mb-10">
+          <li><Progressbar label="CSS" percentage="95" /></li>
+          <li><Progressbar label="Vue" percentage="90" /></li>
+          <li><Progressbar label="HTML" percentage="90" /></li>
+          <li><Progressbar label="JavaScript" percentage="85" /></li>
+          <li><Progressbar label="PHP" percentage="70" /></li>
+          <li><Progressbar label="SQL" percentage="50" /></li>
+          <li><Progressbar label="React" percentage="30" /></li>
         </ul>
       </div>
     </div>
