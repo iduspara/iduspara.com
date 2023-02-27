@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-col print:flex-row lg:flex-row lg:h-screen">
+  <div class="flex flex-col print:flex-row lg:flex-row lg:h-screen print:p-8">
     <div
-      class="w-full lg:max-w-[430px] print:max-w-[200px] overflow-y-auto bg-gradient-to-b from-slate-700 to-slate-900"
+      class="w-full lg:max-w-[430px] print:max-w-[230px] overflow-y-auto bg-gradient-to-b from-slate-700 print:bg-none to-slate-900"
     >
       <Intro />
     </div>
-    <div class="relative w-full p-6 overflow-y-auto">
+    <div class="relative w-full p-6 print:py-0 overflow-y-auto">
       <svg
         class="fixed inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
         aria-hidden="true"
@@ -76,17 +76,20 @@
         </h2>
         <Skills class="mb-20 print:mb-4" />
         <h2 class="mb-5">Sprachen</h2>
-        <div class="flex flex-row items-center w-full gap-10 justify-between">
-          <div class="flex-1">
-            <Progressbar label="Kroatisch" percentage="100" />
+        <dl class="mt-4 grid grid-cols-3 overflow-hidden rounded-xl divide-x-2">
+          <div class="flex flex-col text-gray-800">
+            <dt class="text-sm leading-6">Muttersprache</dt>
+            <dd class="order-first text-2xl">Kroatisch</dd>
           </div>
-          <div class="flex-1">
-            <Progressbar label="Deutsch" percentage="90" />
+          <div class="flex flex-col pl-8 text-gray-800">
+            <dt class="text-sm leading-6">Fließend</dt>
+            <dd class="order-first text-2xl">Deutsch</dd>
           </div>
-          <div class="flex-1">
-            <Progressbar label="Englisch" percentage="80" />
+          <div class="flex flex-col pl-8 text-gray-800">
+            <dt class="text-sm leading-6">Sehr Gut</dt>
+            <dd class="order-first text-2xl">Englisch</dd>
           </div>
-        </div>
+        </dl>
       </div>
     </div>
   </div>
