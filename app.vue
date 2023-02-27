@@ -70,26 +70,23 @@
         <Certificates class="mb-20 print:mb-4" />
         <h2 class="mb-5">Schule & Studium:</h2>
         <School class="mb-20 print:mb-4" />
-        <h2 class="mb-5">
-          Technologien und Fähigkeiten im Bereich der Web- und
-          Desktop-Entwicklung
-        </h2>
+        <h2 class="mb-5">Technologien und Fähigkeiten:</h2>
         <Skills class="mb-20 print:mb-4" />
-        <h2 class="mb-5">Sprachen</h2>
+        <h2 class="mb-5">Sprachen:</h2>
         <dl
-          class="mt-4 grid grid-cols-3 overflow-hidden rounded-xl divide-x-2 mb-10"
+          class="mt-4 grid grid-cols-1 gap-4 md:gap-0 md:grid-cols-3 overflow-hidden rounded-xl md:divide-x-2 mb-10"
         >
           <div class="flex flex-col text-gray-800">
             <dt class="text-sm leading-6">Muttersprache</dt>
-            <dd class="order-first text-2xl">Kroatisch</dd>
+            <dd class="order-first text-xl md:text-2xl">Kroatisch</dd>
           </div>
-          <div class="flex flex-col pl-8 text-gray-800">
+          <div class="flex flex-col md:pl-8 text-gray-800">
             <dt class="text-sm leading-6">Fließend</dt>
-            <dd class="order-first text-2xl">Deutsch</dd>
+            <dd class="order-first text-xl md:text-2xl">Deutsch</dd>
           </div>
-          <div class="flex flex-col pl-8 text-gray-800">
+          <div class="flex flex-col md:pl-8 text-gray-800">
             <dt class="text-sm leading-6">Sehr Gut</dt>
-            <dd class="order-first text-2xl">Englisch</dd>
+            <dd class="order-first text-xl md:text-2xl">Englisch</dd>
           </div>
         </dl>
       </div>
