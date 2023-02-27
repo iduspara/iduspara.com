@@ -2,7 +2,7 @@
   <div class="flex flex-wrap gap-2">
     <div
       v-for="skill in skills"
-      class="inline-block items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-200 text-green-800"
+      class="inline-block items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-200 text-green-800 print:bg-gray-200 print:text-gray-800"
     >
       {{ skill }}
     </div>
