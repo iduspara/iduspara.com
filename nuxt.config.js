@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       title:
-        "Kreativer Full-Stack-Entwickler mit einem Auge für Design - Erfahren in JavaScript, PHP, CSS und MySQL",
+        "Full-Stack-Entwickler mit Fokus auf kreative Lösungen | Igor Duspara",
       htmlAttrs: {
         lang: "en",
       },
@@ -11,7 +11,7 @@ export default defineNuxtConfig({
         {
           name: "description",
           content:
-            "Ein kreativer Full-Stack-Entwickler mit umfassenden Kenntnissen in Javascript, PHP, CSS und MySQL. Leidenschaftlich daran interessiert, komplexe Projekte erfolgreich abzuschließen.",
+            "Talentierter und engagierter Full-Stack-Entwickler mit kreativer Herangehensweise und umfassenden Fähigkeiten in Technologien wie Javascript, PHP, CSS und MySQL",
         },
       ],
     },
