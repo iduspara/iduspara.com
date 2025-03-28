@@ -26,7 +26,7 @@ import Progressbar from './Progressbar.vue';
             <dd
               class="order-first text-3xl tracking-tight text-white print:text-gray-700"
             >
-              33 Jahre
+              36 Jahre
             </dd>
           </div>
           <div class="flex flex-col bg-white/5 print:bg-gray-200 p-4">
@@ -36,7 +36,7 @@ import Progressbar from './Progressbar.vue';
             <dd
               class="order-first text-3xl tracking-tight text-white print:text-gray-700"
             >
-              17 Jahre
+              18 Jahre
             </dd>
           </div>
           <div class="flex flex-col bg-white/5 print:bg-gray-200 p-4">
@@ -90,7 +90,7 @@ import Progressbar from './Progressbar.vue';
           ></a>
           <a
             aria-label="My Github profile link"
-            href="https://github.com/igor-duspara"
+            href="https://github.com/iduspara"
             target="_blank"
             class="ring-1 ring-gray-600 flex items-center justify-center p-4 rounded w-full hover:ring-green-400 hover:text-green-400"
           >
@@ -108,12 +108,12 @@ import Progressbar from './Progressbar.vue';
         <h2 class="text-xl">Mein Daily Tech-Stack:</h2>
         <ul class="mt-4 space-y-4 mb-10">
           <li><Progressbar label="CSS" percentage="95" /></li>
-          <li><Progressbar label="Vue" percentage="90" /></li>
+          <li><Progressbar label="React" percentage="90" /></li>
           <li><Progressbar label="HTML" percentage="90" /></li>
           <li><Progressbar label="JavaScript" percentage="85" /></li>
           <li><Progressbar label="PHP" percentage="70" /></li>
           <li><Progressbar label="SQL" percentage="50" /></li>
-          <li><Progressbar label="React" percentage="30" /></li>
+          <li><Progressbar label="Vue" percentage="30" /></li>
         </ul>
       </div>
     </div>
