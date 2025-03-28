@@ -45,14 +45,23 @@ const timeline = [
   {
     id: 1,
     content:
-      "Bei BANOVO habe ich die Weiterentwicklung der Website und deren Features übernommen. Dazu gehörten die Umsetzung des neuen Designs und die Migration der Website auf das HubSpot CMS. Ich habe hierbei Technologien wie PHP (Symfony, Twig, ApiPlatform), CSS (Tailwind, Quasar), JavaScript (Vue, Quasar, NuxtJS, Vuex) und GraphQL verwendet. Eine weitere wichtige Aufgabe war die Verbesserung der Website-Performance sowie die Optimierung für SEO-Zwecke. Durch meine Arbeit konnte die Website auf den neuesten Stand gebracht werden und die Benutzerfreundlichkeit sowie die Sichtbarkeit in Suchmaschinen verbessert werden.",
-    title: "Front End Developer",
+      "",
+    title: "Senior Front End Developer",
     company: "BANOVO GmbH",
-    date: "Feb 2019 till today",
-    datetime: "2019-02-01",
+    date: "May 2023 - till today",
+    datetime: "2023-05-01",
   },
   {
     id: 2,
+    content:
+      "Bei BANOVO habe ich die Weiterentwicklung der Website und deren Features übernommen. Dazu gehörten die Umsetzung des neuen Designs und die Migration der Website auf das HubSpot CMS. Ich habe hierbei Technologien wie PHP (Symfony, Twig, ApiPlatform), CSS (Tailwind, Quasar), JavaScript (Vue, Quasar, NuxtJS, Vuex) und GraphQL verwendet. Eine weitere wichtige Aufgabe war die Verbesserung der Website-Performance sowie die Optimierung für SEO-Zwecke. Durch meine Arbeit konnte die Website auf den neuesten Stand gebracht werden und die Benutzerfreundlichkeit sowie die Sichtbarkeit in Suchmaschinen verbessert werden.",
+    title: "Front End Developer",
+    company: "BANOVO GmbH",
+    date: "Feb 2019 - Mai 2023",
+    datetime: "2019-02-01 - 2023-05-01",
+  },
+  {
+    id: 3,
     content:
       "Bei CHECK24 GmbH war ich für die Weiterentwicklung und Verbesserung des Risikolebensversicherungsrechners verantwortlich. Dabei habe ich die Webarchitektur konzipiert und umgesetzt, Prototypen erstellt sowie neue Dienste, Features und Produkte entwickelt. Eine wichtige Aufgabe war auch die Weiterentwicklung der Firmenstandards. Dabei habe ich Technologien wie PHP (Zend, Swagger), CSS, HTML, JavaScript (jQuery), MySQL, JIRA und BitBucket verwendet. Eine weitere wichtige Aufgabe war die Verbesserung der Website-Performance sowie die Optimierung für SEO-Zwecke. Durch meine Arbeit konnte die Benutzerfreundlichkeit der Website verbessert werden und die Sichtbarkeit in Suchmaschinen gesteigert werden.",
     title: "Full-stack Developer (Freelancer)",
@@ -61,7 +70,7 @@ const timeline = [
     datetime: "2013-08-01 - 2019-02-01",
   },
   {
-    id: 3,
+    id: 4,
     content:
       "Ich habe ein Immobilienportal entwickelt, das Ähnlichkeiten mit der Internetpräsenz des Unternehmens aufweist. Hierbei habe ich Technologien wie PHP, HTML, CSS und MySQL eingesetzt, um eine leistungsstarke und benutzerfreundliche Plattform zu schaffen. Ein besonderes Feature meines Projekts war eine FTP-Schnittstelle, die den Import von Anzeigen ermöglichte. Mit meinem Fachwissen und meinen Fähigkeiten habe ich maßgeblich zur erfolgreichen Umsetzung dieses Projekts beigetragen und somit einen wertvollen Beitrag zum Erfolg der HIHC GmbH geleistet.",
     title: "Full-stack Developer (Freelancer)",
@@ -70,7 +79,7 @@ const timeline = [
     datetime: "2012-09-01",
   },
   {
-    id: 4,
+    id: 5,
     content:
       "Bei Svijet Medija d.o.o habe ich als Webshop-Administrator gearbeitet und Unterstützung bei der Netzwerkadministration und im Marketing geleistet. Ich war auch als Projektleiter für die Entwicklung von Business-Anwendungen und deren Webshop tätig. Darüber hinaus habe ich sowohl Web- als auch Desktop-Anwendungen für das Unternehmen entwickelt.",
     title: "Adminstrator / Entwickler / Projektleiter",
@@ -79,7 +88,7 @@ const timeline = [
     datetime: "2008-09-01 - 2012-08-01",
   },
   {
-    id: 5,
+    id: 6,
     content:
       "Software Entwickler bei einer Verlag Firma. Zuständig für das Administrieren und weiterentwickeln deren Website.",
     title: "Full-Stack Entwickler",
