@@ -47,7 +47,7 @@ const timeline = [
     content:
       "",
     title: "Senior Front End Developer",
-    company: "BANOVO GmbH",
+    company: "Finanztip GmbH",
     date: "May 2023 - till today",
     datetime: "2023-05-01",
   },
