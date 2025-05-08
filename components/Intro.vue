@@ -68,7 +68,7 @@ import Progressbar from './Progressbar.vue';
         >
           <a
             aria-label="My E-Mail"
-            href="mailto:igor.duspara@gmail.com"
+            href="mailto:igor.duspara@iduspara.com"
             target="_blank"
             class="ring-1 ring-gray-600 flex items-center justify-center p-4 rounded w-full hover:ring-green-400 hover:text-green-400"
           >
