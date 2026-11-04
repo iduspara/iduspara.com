@@ -13,11 +13,11 @@ Every kilobyte of JavaScript has to be downloaded, parsed and executed, on the s
 
 ## 2. Images are usually the biggest win
 
-On almost every site I've audited, images were the largest part of the page. Modern formats like AVIF, correct `sizes` attributes and explicit dimensions fix most of it, and explicit dimensions also prevent layout shift.
+On almost every site I've audited, images were the largest part of the page. Modern formats like WebP, correct `sizes` attributes and explicit dimensions fix most of it, and explicit dimensions also prevent layout shift.
 
 ```html
 <img
-  src="/cover.avif"
+  src="/cover.webp"
   width="1440"
   height="900"
   sizes="(min-width: 1024px) 480px, 100vw"

@@ -111,4 +111,4 @@ Frontmatter is validated with Zod, so a mistake fails the build with a clear mes
 - Pages are Server Components; the only client components are the theme toggle, the language links and the active-link state in the navigation. The mobile menu uses the native Popover API.
 - `ensureStatic = "navigation"` in the root layout makes the build fail if anything becomes request-time dynamic.
 - On phones, project cards use small thumbnails and the case-study cover sits below the text, so the LCP element is text (Lighthouse's simulated LCP is much cheaper for text than for images).
-- Fonts are self-hosted via `next/font`; images are served as AVIF/WebP via `next/image`.
+- Fonts are self-hosted via `next/font`; images are served as WebP via `next/image`.
