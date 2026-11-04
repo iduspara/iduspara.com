@@ -7,7 +7,6 @@ export interface PostMeta {
   description: string;
   date: string;
   updated?: string;
-  tags: string[];
   draft: boolean;
   readingMinutes: number;
 }

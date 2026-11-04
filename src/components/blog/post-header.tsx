@@ -3,8 +3,6 @@ import type { PostMeta } from "@/types/content";
 import { formatDate } from "@/utils/format-date";
 import { formatMessage } from "@/utils/format-message";
 
-import { TagList } from "./tag-list";
-
 export function PostHeader({ post, dict }: { post: PostMeta; dict: Dictionary }) {
   return (
     <header className="border-b pb-8">
@@ -25,9 +23,6 @@ export function PostHeader({ post, dict }: { post: PostMeta; dict: Dictionary })
         {post.title}
       </h1>
       <p className="mt-4 text-lg text-pretty text-muted-foreground">{post.description}</p>
-      <div className="mt-6">
-        <TagList tags={post.tags} />
-      </div>
     </header>
   );
 }

@@ -1,0 +1,81 @@
+---
+title: How I keep Lighthouse at 100 on a bilingual Next.js site
+description: The budgets, image and font choices, and things I refused to ship so iduspara.com stays at Lighthouse 100.
+date: 2025-09-09
+draft: true
+---
+
+Getting a perfect Lighthouse score on a one-page marketing site is easy. Keeping it on a bilingual portfolio with MDX, Open Graph images and a command palette takes more work. I care about the score because it shows me whether I built the site carefully.
+
+## What I actually check
+
+I run Lighthouse on three page types in English and German: the homepage, a portfolio case study and a blog post. Lab scores on my MacBook are a best case, so the run that counts is the throttled mobile one. Field data will matter more once the site has traffic. Until then, I try not to ship regressions I could have caught locally.
+
+## Static by default, enforced by the build
+
+Every route is a Server Component and is fully prerendered at build time. I don't rely on discipline for that. One export in the root layout turns it into a rule:
+
+```tsx title="app/[locale]/layout.tsx"
+/** Every route must be fully prerendered at build time. */
+export const ensureStatic = "navigation";
+```
+
+If I accidentally read a cookie or a header, the build fails instead of quietly making the page dynamic.
+
+The only client JavaScript is interaction I actually need: theme toggle, mobile menu, language switcher and the command palette. Dictionaries stay as server-only JSON. Syntax highlighting for MDX runs at build time with Shiki, so the code blocks in this post cost nothing in the browser.
+
+## Fonts without layout shift
+
+Geist and Geist Mono are loaded through `next/font`, which self-hosts them and generates size-adjusted fallbacks. The mono face only appears in code blocks, so it is not preloaded. Most pages never need it:
+
+```tsx title="app/[locale]/layout.tsx"
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"], display: "swap" });
+/** Only used in code blocks, so it is not preloaded. */
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+});
+```
+
+There are no third-party font requests and no visible jump when the font arrives.
+
+## Images
+
+`next/image` serves AVIF first and falls back to WebP:
+
+```ts title="next.config.ts"
+images: {
+  formats: ["image/avif", "image/webp"],
+  qualities: [75, 85],
+},
+```
+
+The important part is `sizes`. The portrait in the hero is 128 px on phones and 224 px from the `md` breakpoint, and the attribute says exactly that. Otherwise the browser assumes `100vw` and downloads an image several times too large:
+
+```tsx title="components/sections/hero.tsx"
+<Image
+  src={avatar}
+  alt={dict.hero.avatarAlt}
+  width={224}
+  height={224}
+  sizes="(min-width: 768px) 224px, 128px"
+  quality={85}
+  loading="eager"
+  fetchPriority="high"
+  placeholder="blur"
+/>
+```
+
+A wrong `sizes` attribute on a hero image hurts LCP more than most React optimisations can make up for.
+
+One less obvious trick: on phones, project cards use small thumbnails and the case-study cover sits below the text. That makes the LCP element a heading rather than an image, and text is far cheaper to paint under Lighthouse's simulated mobile throttling.
+
+## What I refused to ship
+
+No analytics scripts, no cookie banner, no chat widget, no heavy UI kit "just in case". Each of them adds a feature and costs performance and privacy. On a personal site, I don't think that's worth it.
+
+## Catching regressions
+
+Zod validates MDX frontmatter at build time, and static generation means a dynamic escape hatch shows up as a failed build. For performance I have one rule: before I merge anything that touches layout, fonts, images or third-party code, I re-run Lighthouse on the three page types above.

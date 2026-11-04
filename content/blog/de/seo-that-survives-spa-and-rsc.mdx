@@ -1,0 +1,83 @@
+---
+title: SEO, das SPAs und React Server Components überlebt
+description: Was für Suche nach 20 Jahren Front-End noch zählt, von CHECK24 und Finanztip bis zu einer statischen Next-Site.
+date: 2025-04-15
+draft: true
+---
+
+Frameworks haben geändert, wie HTML im Browser ankommt. Sie haben nicht geändert, warum Menschen eine Seite finden oder wieder verlassen. Seit jQuery sehe ich SEO-Ratgeber jedem neuen Rendering-Modell hinterherlaufen. Ein paar Grundlagen haben die ganze Zeit gehalten.
+
+## Was SPAs kaputt gemacht haben, und was RSC und SSG reparieren
+
+Client-only-Apps haben einer Generation beigebracht, dass eine leere Hülle plus JavaScript „modern“ sei. Crawler wurden besser, aber dünnes HTML, späte Titles und Links, die erst nach der Hydration existieren, verlieren trotzdem. Server Components und statische Generierung kehren zu dem zurück, was immer funktioniert hat: das fertige Dokument ausliefern.
+
+Auf dieser Site wird jede Locale-Route vorgerendert. Mache ich eine Seite versehentlich dynamisch, scheitert der Build. Das hilft der SEO genauso wie der Performance.
+
+## Immer noch unverhandelbar
+
+- Crawlbares HTML mit klarer Überschriftenstruktur und einer Aufgabe pro Seite.
+- Echte Links statt Click-Handler, die Navigation spielen.
+- Stabile URLs: `/en/...` und `/de/...` statt einer einzigen URL, die die Sprache per JavaScript tauscht.
+- Titles und Meta-Descriptions, die die Seite beschreiben, nicht überall derselbe Markenslogan.
+
+Die Link-Regel klingt selbstverständlich, aber die erste Variante finde ich immer noch in Code-Reviews:
+
+```tsx
+// A crawler sees no link here, and neither does a screen reader or a middle click.
+<div onClick={() => router.push("/en/blog")}>Blog</div>
+
+// A real link. Next still prefetches it and navigates client-side.
+<Link href="/en/blog">Blog</Link>
+```
+
+## Metadaten, die sich auszahlen
+
+Canonical-URLs, `hreflang`-Alternates, Open Graph und Twitter Cards kommen alle aus einem `buildMetadata`-Helper, damit keine Seite eines davon vergessen kann. Der `hreflang`-Teil ist das, was zweisprachige Sites am häufigsten falsch machen:
+
+```ts title="lib/seo.ts"
+const languages: Record<string, string> = {};
+for (const l of availableLocales) languages[localeTags[l].lang] = localePath(l, path);
+// x-default points to the language-neutral URL, which redirects by Accept-Language.
+if (availableLocales.length === locales.length) {
+  languages["x-default"] = path || "/";
+} else if (availableLocales.includes(defaultLocale)) {
+  languages["x-default"] = localePath(defaultLocale, path);
+}
+```
+
+`availableLocales` ist wichtig: Existiert ein Beitrag nur auf Englisch, darf die deutsche Seite keine Alternative bewerben, die auf einen 404 führt. Blogbeiträge übergeben die Sprachen, in denen sie tatsächlich existieren, und statische Seiten nehmen standardmäßig beide. Das gerenderte Ergebnis für einen Beitrag in beiden Sprachen:
+
+```html
+<link rel="canonical" href="https://iduspara.com/de/blog/seo-that-survives-spa-and-rsc" />
+<link rel="alternate" hreflang="en" href="https://iduspara.com/en/blog/seo-that-survives-spa-and-rsc" />
+<link rel="alternate" hreflang="de" href="https://iduspara.com/de/blog/seo-that-survives-spa-and-rsc" />
+<link rel="alternate" hreflang="x-default" href="https://iduspara.com/blog/seo-that-survives-spa-and-rsc" />
+```
+
+Die Sitemap wiederholt dieselben Alternates, sodass Crawler an beiden Stellen dieselben Informationen bekommen.
+
+Auch Titles und Descriptions bekommen Leitplanken. Google zeigt etwa 60 Zeichen eines Titles, deshalb lässt der Helper das Suffix „ · Igor Duspara“ weg, wenn es den Title darüber hinausschieben würde:
+
+```ts title="lib/seo.ts"
+const documentTitle =
+  title && title.length + TITLE_SUFFIX.length > MAX_TITLE_LENGTH ? { absolute: title } : title;
+```
+
+Meta-Descriptions prüft das Frontmatter-Schema. Eine Description, die in den Suchergebnissen mitten im Satz abgeschnitten würde, lässt stattdessen den Build scheitern:
+
+```ts title="lib/content.ts"
+/** Search engines cut meta descriptions at roughly 160 characters. */
+const metaDescription = z.string().min(50).max(160);
+```
+
+## Inhalt und Intention
+
+Bei Finanztip und früher bei CHECK24 funktionierten die Seiten, die eine echte Frage mit brauchbarem Inhalt beantworteten: Rechner, Ratgeber, Vergleiche. Eine persönliche Site ist kleiner, aber dieselbe Regel gilt: Jede URL soll eine Aufgabe haben. Portfolio-Fallstudien, Blogbeiträge und Rechtstexte bedienen verschiedene Intentionen. Ich erfinde keine dünnen Tag-Seiten „für SEO“.
+
+## Performance gehört zu SEO
+
+Core Web Vitals zählen, aber ich jage nicht jedem Laborwert hinterher. Schnelles HTML, wenig JavaScript und richtig dimensionierte Bilder helfen Nutzern und Crawlern. Ein perfekter Lighthouse-Score auf einer Seite ohne nützlichen Inhalt hilft niemandem.
+
+## Was ich nicht tue
+
+Keyword-Stuffing, Doorway-Pages oder Beiträge nur, um „den Blog zu füttern“. Für mich ist Suche der Weg, über den Leute finden, was ich sowieso schreiben würde. Ich konzentriere mich auf nützliche Seiten und überlasse den Crawler dem Setup.

@@ -1,0 +1,83 @@
+---
+title: SEO that still matters after SPAs and React Server Components
+description: What still moves search after 20 years of front-end, from CHECK24 and Finanztip to a static Next site.
+date: 2025-04-15
+draft: true
+---
+
+Frameworks changed how HTML arrives in the browser. They did not change why people find a page or leave it. I have watched SEO advice chase every new rendering model since jQuery. A few fundamentals have held up the whole time.
+
+## What SPAs broke, and what RSC and SSG fixed
+
+Client-only apps taught a generation that a blank shell plus JavaScript was "modern". Crawlers got better, but thin HTML, late titles and links that only exist after hydration still lose. Server Components and static generation go back to what always worked: sending the full document.
+
+On this site every locale route is prerendered. If I accidentally make a page dynamic, the build fails. That helps SEO as much as performance.
+
+## Still non-negotiable
+
+- Crawlable HTML with a clear heading structure and one job per page.
+- Real links, not click handlers pretending to be navigation.
+- Stable URLs: `/en/...` and `/de/...` instead of a single URL that swaps language in JavaScript.
+- Titles and meta descriptions that describe the page, not a brand slogan repeated everywhere.
+
+The link rule sounds obvious, but I still find the first version in code reviews:
+
+```tsx
+// A crawler sees no link here, and neither does a screen reader or a middle click.
+<div onClick={() => router.push("/en/blog")}>Blog</div>
+
+// A real link. Next still prefetches it and navigates client-side.
+<Link href="/en/blog">Blog</Link>
+```
+
+## Metadata that compounds
+
+Canonical URLs, `hreflang` alternates, Open Graph and Twitter cards all come from one `buildMetadata` helper, so no page can forget one of them. The `hreflang` part is the piece bilingual sites most often get wrong:
+
+```ts title="lib/seo.ts"
+const languages: Record<string, string> = {};
+for (const l of availableLocales) languages[localeTags[l].lang] = localePath(l, path);
+// x-default points to the language-neutral URL, which redirects by Accept-Language.
+if (availableLocales.length === locales.length) {
+  languages["x-default"] = path || "/";
+} else if (availableLocales.includes(defaultLocale)) {
+  languages["x-default"] = localePath(defaultLocale, path);
+}
+```
+
+`availableLocales` matters: if a post only exists in English, the German page must not advertise an alternate that returns a 404. Blog posts pass the locales they actually exist in, and static pages default to both. The rendered result for a post in both languages:
+
+```html
+<link rel="canonical" href="https://iduspara.com/en/blog/seo-that-survives-spa-and-rsc" />
+<link rel="alternate" hreflang="en" href="https://iduspara.com/en/blog/seo-that-survives-spa-and-rsc" />
+<link rel="alternate" hreflang="de" href="https://iduspara.com/de/blog/seo-that-survives-spa-and-rsc" />
+<link rel="alternate" hreflang="x-default" href="https://iduspara.com/blog/seo-that-survives-spa-and-rsc" />
+```
+
+The sitemap repeats the same alternates, so crawlers get the same information in both places.
+
+Titles and descriptions get guardrails too. Google shows roughly 60 characters of a title, so the helper drops the " · Igor Duspara" suffix when it would push a title past that:
+
+```ts title="lib/seo.ts"
+const documentTitle =
+  title && title.length + TITLE_SUFFIX.length > MAX_TITLE_LENGTH ? { absolute: title } : title;
+```
+
+And meta descriptions are validated in the frontmatter schema, so a description that would be cut off mid-sentence in search results fails the build instead:
+
+```ts title="lib/content.ts"
+/** Search engines cut meta descriptions at roughly 160 characters. */
+const metaDescription = z.string().min(50).max(160);
+```
+
+## Content and intent
+
+At Finanztip and earlier at CHECK24, the pages that worked answered a real question with usable content: calculators, guides, comparisons. A personal site is smaller, but the same rule applies: each URL should do one job. Portfolio case studies, blog posts and legal pages serve different intents. I don't invent thin tag pages "for SEO".
+
+## Performance is part of SEO
+
+Core Web Vitals matter, but I don't chase every lab metric. Fast HTML, little JavaScript and correctly sized images help users and crawlers. A perfect Lighthouse score on a page with nothing useful on it doesn't help anyone.
+
+## What I don't do
+
+Keyword stuffing, doorway pages, or publishing posts only to "feed the blog". For me, search is how people find things I would write anyway. I focus on useful pages and let the setup take care of the crawler.

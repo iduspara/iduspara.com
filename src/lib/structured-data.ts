@@ -47,7 +47,6 @@ export function blogPostingJsonLd(post: PostMeta) {
     datePublished: post.date,
     dateModified: post.updated ?? post.date,
     inLanguage: localeTags[post.locale].lang,
-    keywords: post.tags.join(", "),
     url,
     mainEntityOfPage: url,
     image: `${url}/opengraph-image`,
