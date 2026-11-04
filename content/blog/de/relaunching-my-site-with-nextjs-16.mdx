@@ -1,0 +1,49 @@
+---
+title: Mein Website-Relaunch mit Next.js 16
+description: Warum ich iduspara.com von einer Nuxt-Lebenslaufseite zu einem zweisprachigen Portfolio mit Blog auf Basis von Next.js 16 und shadcn/ui umgebaut habe.
+date: 2026-11-04
+tags: ["nextjs", "react", "performance"]
+draft: false
+---
+
+Meine alte Homepage war eine einzelne deutschsprachige Lebenslaufseite, die ich vor einigen Jahren mit Nuxt gebaut habe. Sie hat ihren Zweck erfüllt, aber nicht mehr gezeigt, womit ich meine Zeit tatsächlich verbringe: mit dem Bauen eigener Produkte. Also habe ich sie von Grund auf neu gebaut.
+
+## Was ich wollte
+
+- **Ein Portfolio** für meine Produkte wie [MiniRemote](/de/portfolio/miniremote) und [CupertinoUI](/de/portfolio/cupertino-ui).
+- **Einen Blog**, in dem ich über Front-End-Entwicklung schreiben kann.
+- **Englisch und Deutsch**, mit korrekten `hreflang`-Angaben.
+- **Einen perfekten Lighthouse-Score**, weil Performance für mich Teil des Handwerks ist und kein nachträglicher Gedanke.
+
+## Der Stack
+
+Ich habe mich für **Next.js 16** mit dem App Router, **Tailwind CSS 4** und **shadcn/ui** auf Basis von Base UI entschieden. Jede Seite ist standardmäßig eine Server Component und wird beim Build komplett vorgerendert. Das erzwinge ich mit einer einzigen Zeile im Root-Layout:
+
+```tsx title="app/[locale]/layout.tsx"
+/** Jede Route muss beim Build komplett vorgerendert werden. */
+export const ensureStatic = "navigation";
+```
+
+Lese ich irgendwo versehentlich ein Cookie oder einen Header, schlägt der Build fehl, statt die Seite stillschweigend dynamisch zu machen.
+
+## Internationalisierung ohne Bibliothek
+
+Next.js 16 kann die Sprache aus dem Root-Segment überall auf dem Server über `next/root-params` lesen. Ich brauche also gar keine i18n-Bibliothek. Meine Wörterbücher sind einfache JSON-Dateien, die nie im Browser landen:
+
+```ts title="i18n/dictionaries.ts"
+import { locale as localeParam } from "next/root-params";
+
+export async function getLocale() {
+  const value = await localeParam();
+  if (!hasLocale(value)) notFound();
+  return value;
+}
+```
+
+## Inhalte als MDX
+
+Blogbeiträge und Fallstudien liegen als MDX-Dateien im Repository. Das Frontmatter prüfe ich mit Zod, sodass ein Tippfehler den Build abbricht und nicht die Seite. Syntax-Highlighting läuft beim Build mit Shiki, dieser Codeblock kostet also null JavaScript im Browser.
+
+## Weniger JavaScript ausliefern
+
+Die einzigen interaktiven Teile sind der Design-Umschalter, das mobile Menü und die Sprachlinks. Alles andere ist HTML und CSS. Das ist das ganze Geheimnis hinter dem Score.

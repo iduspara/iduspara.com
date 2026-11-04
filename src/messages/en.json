@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "title": "Igor Duspara — Senior Front-End Developer & Product Builder",
+    "description": "I'm Igor Duspara, a senior front-end developer in Munich with {years}+ years of experience, building fast web products and apps like MiniRemote.",
+    "ogAlt": "Igor Duspara — Senior Front-End Developer & Product Builder"
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNav": "Main",
+    "mobileNav": "Mobile",
+    "footerNav": "Footer",
+    "languageNav": "Language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "home": "Igor Duspara, home",
+    "opensInNewTab": "(opens in a new tab)",
+    "socialLinks": "Social profiles"
+  },
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "contact": "Contact",
+    "ai": "AI"
+  },
+  "theme": {
+    "label": "Theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "switchTo": "Switch theme (current: {current})"
+  },
+  "hero": {
+    "eyebrow": "Hi, I'm Igor 👋",
+    "title": "I build fast, thoughtful products for the web and the Mac.",
+    "lead": "I'm a senior front-end developer at Finanztip, based in Munich. In my spare time I build my own products, like MiniRemote, CupertinoUI and Shadcn Builder.",
+    "location": "Munich, Germany",
+    "ctaPrimary": "See my work",
+    "ctaSecondary": "Get in touch",
+    "avatarAlt": "Portrait of Igor Duspara"
+  },
+  "stats": {
+    "label": "At a glance",
+    "years": "years building for the web",
+    "products": "products I've launched",
+    "frontend": "of my work is front-end",
+    "stars": "GitHub stars on Shadcn Builder"
+  },
+  "about": {
+    "title": "About me",
+    "paragraphs": [
+      "I've been building for the web since 2006. I started out as a full-stack developer in Croatia, worked for years as a freelancer for companies like CHECK24, and today I focus on the front end, where design, usability and engineering meet.",
+      "I care about the details people feel but rarely notice: pages that load instantly, interfaces that work with a keyboard and a screen reader, and code that the next developer enjoys reading. My background in SEO and marketing helps me build things that are not only well made, but also found and used.",
+      "Outside my day job I ship my own products. I like owning the whole journey, from the first prototype and the design to pricing, launch and support."
+    ]
+  },
+  "ai": {
+    "title": "How I work with AI",
+    "lead": "AI is part of my daily workflow. It makes me faster, but it doesn't replace judgement, so I'm deliberate about where I use it and where I don't.",
+    "principles": [
+      {
+        "title": "Agents do the legwork, I make the calls",
+        "body": "I use coding agents for scaffolding, refactors, migrations, tests and documentation. Architecture, UX decisions and the final review stay with me."
+      },
+      {
+        "title": "Same quality bar for every line",
+        "body": "AI-written code goes through the same gates as mine: strict types, linting, tests, accessibility checks and performance budgets. This site was built that way and scores 100 in Lighthouse."
+      },
+      {
+        "title": "I build products for agents, too",
+        "body": "MiniRemote ships an MCP server that lets agents like Claude Code, Codex or Cursor operate a Mac. CupertinoUI is a shadcn registry that AI tools can install components from."
+      },
+      {
+        "title": "From idea to launch, faster",
+        "body": "AI is a big reason I can design, build and ship my own products next to a full-time job, from the first prototype to the landing page and docs."
+      }
+    ]
+  },
+  "experience": {
+    "title": "Experience",
+    "lead": "Where I've worked over the past {years} years.",
+    "present": "Present",
+    "current": "Current"
+  },
+  "skills": {
+    "title": "Skills",
+    "lead": "The tools and practices I use every day, including the AI tools in my workflow."
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "lead": "Products I've designed, built and launched on my own.",
+    "featured": "Selected work",
+    "viewAll": "View all projects",
+    "viewProject": "Read the case study",
+    "visit": "Visit {name}",
+    "since": "Since",
+    "role": "My role",
+    "stack": "Stack",
+    "links": "Links",
+    "status": {
+      "active": "Active",
+      "maintained": "Maintained",
+      "archived": "Archived"
+    },
+    "back": "Back to portfolio",
+    "metaTitle": "Portfolio: products I've built",
+    "metaDescription": "Case studies of products I've designed, built and launched on my own: MiniRemote, CupertinoUI, Shadcn Builder, Gorivo.hr and Codeimg.io.",
+    "caseStudyTitle": "{name}: case study"
+  },
+  "blog": {
+    "title": "Blog",
+    "lead": "Notes on front-end engineering, performance and building products on my own.",
+    "latest": "Latest writing",
+    "viewAll": "Read the blog",
+    "readMore": "Read the post",
+    "readingTime": "{minutes} min read",
+    "published": "Published",
+    "updated": "Updated",
+    "empty": "I'm working on my first posts. Check back soon.",
+    "back": "Back to the blog",
+    "rss": "RSS feed",
+    "metaTitle": "Blog on front-end and performance",
+    "metaDescription": "I write about front-end engineering, web performance, accessibility and building my own products with React, Next.js and AI."
+  },
+  "contact": {
+    "title": "Let's work together",
+    "lead": "Have a project, a question or just want to say hello? I usually reply within a few days.",
+    "email": "Email me",
+    "orFind": "You can also find me on"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "imprint": "Imprint",
+    "privacy": "Privacy",
+    "builtWith": "I built this site with Next.js, Tailwind CSS and shadcn/ui."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "lead": "I couldn't find the page you were looking for. It may have moved or never existed.",
+    "home": "Back to the homepage"
+  },
+  "imprint": {
+    "title": "Imprint",
+    "lead": "Information according to § 5 DDG (German Digital Services Act).",
+    "metaDescription": "Legal notice for iduspara.com: who is responsible for this website, how to contact me, and my liability for content, links and copyright."
+  },
+  "privacy": {
+    "title": "Privacy policy",
+    "lead": "How I handle your data on this website.",
+    "metaDescription": "How I handle your data on iduspara.com: no cookies, no tracking, no analytics. Details on hosting, email contact and your rights under the GDPR."
+  }
+}
