@@ -1,5 +1,6 @@
 import { ArrowUpRightIcon } from "lucide-react";
 import Image from "next/image";
+import { ViewTransition } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -10,22 +11,28 @@ import type { ProjectMeta } from "@/types/content";
 import { formatDate } from "@/utils/format-date";
 import { formatMessage } from "@/utils/format-message";
 
+import { WindowChrome } from "./window-chrome";
+
 /**
  * Cover screenshot. On phones it is placed after the write-up (see the page), so the
  * title stays the LCP element; from `md` upwards it sits right below the header.
  */
 export function ProjectCover({ project }: { project: ProjectMeta }) {
   return (
-    <figure className="overflow-hidden rounded-2xl border bg-muted">
-      <Image
-        src={project.cover}
-        alt={project.coverAlt}
-        width={1440}
-        height={900}
-        sizes="(min-width: 1024px) 960px, 100vw"
-        loading="eager"
-        className="w-full"
-      />
+    <figure>
+      <WindowChrome title={project.title}>
+        <ViewTransition name={`project-cover-${project.slug}`} share="morph" default="none">
+          <Image
+            src={project.cover}
+            alt={project.coverAlt}
+            width={1440}
+            height={900}
+            sizes="(min-width: 1024px) 960px, 100vw"
+            loading="eager"
+            className="w-full bg-muted"
+          />
+        </ViewTransition>
+      </WindowChrome>
     </figure>
   );
 }

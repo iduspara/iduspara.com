@@ -1,0 +1,72 @@
+---
+title: Null Cookies, null Tracker, und ich weiß trotzdem, dass die Site funktioniert
+description: Warum iduspara.com ohne Analytics auskommt und wie ich trotzdem kaputte Seiten und schlechte Launches merke.
+date: 2025-06-24
+draft: true
+---
+
+„Wie viele Besucher?“ ist die falsche erste Frage, wenn die Seite langsam, kaputt oder zu Tode getrackt ist. Auf iduspara.com nutze ich **keine Cookies, kein Tracking und keine Analytics**.
+
+## Was ich heute ausliefere
+
+Schriften hoste ich selbst. Es gibt keine Third-Party-Embeds, keine Tag-Manager und kein „datenschutzfreundliches“ Analytics-Pixel, das trotzdem nach Hause telefoniert. Die [Datenschutzerklärung](/de/privacy) ist absichtlich kurz: Es gibt kaum etwas offenzulegen.
+
+Das Einzige, was sich die Site merkt, ist dein helles oder dunkles Design. Es liegt in `localStorage` auf deinem Gerät und wird nirgendwohin geschickt. Der Theme-Provider ist das Standard-Setup von `next-themes`, mehr braucht es nicht:
+
+```tsx title="app/[locale]/layout.tsx"
+<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+  {children}
+</ThemeProvider>
+```
+
+Eine Einschränkung: Die Site liegt bei Vercel, und wie jeder Hoster schreibt Vercel technisch notwendige Server-Logs (IP-Adresse, Zeitpunkt, aufgerufene Seite), um sie auszuliefern. Auch das steht in der Datenschutzerklärung. „Kein Tracking“ heißt: Ich packe nichts obendrauf, was ein Webserver nicht ohnehin zum Funktionieren braucht.
+
+Das hält die DSGVO-Geschichte einfach, spart das Cookie-Banner und schützt den Lighthouse-Score. Es passt auch zu dem, was eine persönliche Site für mich sein soll: ein Ort, an dem man einen Blogbeitrag lesen kann, ohne getrackt zu werden.
+
+## Was ich verliere und was ich nicht brauche
+
+Ohne Analytics sehe ich keine Funnels, Referrer oder Scrolltiefe. Für Portfolio und Blog ändern diese Zahlen selten eine Entscheidung. Ich weiß bereits, welche Produkte ich zeigen und welche Beiträge ich schreiben will. Vanity-Metriken würden mich vor allem ablenken.
+
+Produkte sind anders. [CupertinoUI](/de/portfolio/cupertino-ui), [Gorivo.hr](/de/portfolio/gorivo) und [MiniRemote](/de/portfolio/miniremote) haben Nutzer, deren Verhalten tatsächlich ändert, was ich als Nächstes baue. Deshalb nutzen sie Analytics. Diese Site nicht.
+
+## Wie ich in meinen Produkten messe
+
+Meine Produkte nutzen PostHog, und in jedem davon läuft es über einen Reverse Proxy auf der eigenen Domain des Produkts. Der Browser spricht nie direkt mit einem PostHog-Hostnamen. Events gehen an eine First-Party-Adresse und werden von dort weitergeleitet:
+
+```ts
+posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+  // A first-party endpoint on the product's domain, not a PostHog hostname.
+  api_host: "https://e.example.com",
+  ui_host: "https://eu.posthog.com",
+});
+```
+
+Der Grund ist Zuverlässigkeit. Adblocker und Privacy-Extensions blockieren bekannte Analytics-Hostnamen, und ein spürbarer Teil eines technischen Publikums nutzt so etwas. Ohne Proxy wären die Zahlen unvollständig und verzerrt, weil sie vor allem Nutzer zeigen, die nichts blockieren. Das sind meistens nicht die Leute, die ein Tool wie MiniRemote verwenden.
+
+Ein Datenschutz-Feature ist der Proxy allerdings nicht. Daten über die eigene Domain zu leiten ändert, wohin Requests gehen, aber nicht, was erhoben wird oder welche Regeln gelten. Einwilligung und Datenschutzerklärung müssen trotzdem zu dem passen, was das Produkt tatsächlich misst. Der Proxy sorgt für vollständigere Daten. An meinen Pflichten ändert er nichts.
+
+Die Überlegung ist dieselbe wie bei dieser Site. In den Produkten ändern die Zahlen Entscheidungen. Auf einer persönlichen Site mit Blog tun sie das nicht, also erhebe ich sie hier nicht.
+
+## Wie ich trotzdem weiß, dass sie funktioniert
+
+- **Der Build:** jede Route wird vorgerendert, und ungültiges Frontmatter oder eine versehentlich dynamische Seite lassen den Build scheitern, bevor etwas in Produktion landet.
+- **Lighthouse:** von Hand auf den wichtigen Templates, bevor Änderungen an Layout, Fonts oder Bildern live gehen.
+- **Hosting:** bricht ein Vercel-Deploy oder DNS, sehe ich das im Deploy-Status, nicht in einer Besucherkurve.
+- **Suche:** die Google Search Console zeigt mir, ob Seiten indexiert sind oder Coverage-Fehler haben. Dafür reicht ein Verifizierungs-Meta-Tag, kein Skript auf der Seite.
+- **Menschen:** kaputte Links und Tippfehler kommen weiterhin per E-Mail. Auf dieser Skala reicht dieser Kanal.
+
+Das Search-Console-Tag ist das einzige „Fremde“ im `<head>`, und es sind reine Metadaten. Optional ist es außerdem: Ohne die Umgebungsvariable wird nichts gerendert.
+
+```tsx title="app/[locale]/layout.tsx"
+verification: process.env.GOOGLE_SITE_VERIFICATION
+  ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+  : undefined,
+```
+
+## Optionen, die ich geprüft und verworfen habe
+
+Ich habe mir datenschutzfreundliche Analytics angeschaut, die ohne Cookies und nur mit aggregierten Zahlen werben. Selbst das leichteste Skript ist trotzdem Third-Party-JavaScript, ein weiterer Fehlerfall und ein Grund, die Datenschutzerklärung neu aufzumachen. Solange eine Metrik nicht klar ändert, was ich ausliefere, bleibt die Seite frei von Messcode.
+
+## Messen, was Entscheidungen ändert
+
+Hier ist mir wichtig, dass Seiten schnell laden, zugänglich bleiben und die Produkte zeigen, die ich baue. Dafür brauche ich kein Dashboard. Wenn ein Produkt Zahlen braucht, bekommt dieses Produkt Analytics über seine eigene Domain, nicht jede Seite, die ich schreibe.

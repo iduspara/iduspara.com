@@ -26,7 +26,12 @@ export default async function PortfolioPage() {
     <>
       <PageHeader title={dict.portfolio.title} lead={dict.portfolio.lead} />
       <Container className="pb-20">
-        <ProjectGrid projects={projects.map((p) => p.meta)} headingLevel="h2" prioritizeFirst />
+        <ProjectGrid
+          projects={projects.map((p) => p.meta)}
+          dict={dict}
+          headingLevel="h2"
+          prioritizeFirst
+        />
       </Container>
     </>
   );

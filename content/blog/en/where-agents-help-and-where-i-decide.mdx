@@ -1,0 +1,106 @@
+---
+title: Where coding agents help, and where I still decide
+description: How I use Claude and Codex for speed without lowering the bar on architecture, structure or review.
+date: 2026-01-20
+draft: true
+---
+
+AI is part of my daily workflow. It makes me faster, but it doesn't replace judgement, and it doesn't get a say on taste, risk or when something ships. Agents do a lot of the work. The decisions stay with me.
+
+This post is about what that looks like in practice: what I hand over, what I keep, what goes wrong, and why I review less than you might expect.
+
+## Two tools, two contexts
+
+I use Claude for my private projects (this site, [MiniRemote](/en/portfolio/miniremote), [CupertinoUI](/en/portfolio/cupertino-ui)) and Codex in my day job. I chose that split on purpose. I don't want to know one tool well and the other from blog posts. Using both every day, on real code with real deadlines, shows me what each one does well and where it goes off track.
+
+Most of what I've learned applies to both, so I don't separate them below.
+
+## Where agents save me the most time
+
+Three kinds of work have changed the most for me.
+
+**Architecture planning.** I don't mean the decision itself, but exploring the options. I describe the constraints and ask for two or three ways to structure something, with the tradeoffs spelled out. The agent is fast at laying out options I would otherwise sketch on paper for an hour. Then I pick one, and often I change it. What I get out of it is a good first overview of the options. The choice stays mine.
+
+**Documentation.** READMEs, setup notes, explaining why a module exists. It is important and it is the first thing I would skip under time pressure. An agent writes a solid first version from the code. I then correct the parts where intent matters.
+
+**Tests.** Writing the obvious cases, the edge cases I list, and the boring fixtures around them. This pays off twice, because once the tests exist, they also catch the agent's next mistake.
+
+All three are well understood, a bit tedious and easy to check. That's where agents work best for me.
+
+## Where it costs me time
+
+Small, precise changes. If I know exactly which line needs to change, like a class name, a condition or a copy fix, writing the prompt takes longer than making the edit. Then I still have to read the diff and check the agent didn't "improve" something next to it.
+
+My rule: if I can describe the change in less time than it takes to type it, I do it myself.
+
+## Agents invent their own framework
+
+The most common problem I see is code that works but ignores how the framework is meant to be used.
+
+Ask for a dialog and you may get a hand-rolled modal with its own focus handling, instead of the shadcn/ui component the project already uses. Ask for a Next.js route and you may get last year's conventions: `middleware.ts` instead of `proxy.ts`, or client-side data fetching on a page that should be a Server Component. The agent fills gaps with its own definitions, and they look plausible.
+
+So I am strict about one thing: the agent follows the framework's guidelines, not its own. In practice that means:
+
+- **Next.js:** read the docs that ship with the installed version before writing code. This repo's `AGENTS.md` says exactly that, because Next.js 16 changed enough to make training data unreliable.
+- **shadcn/ui:** add components with the CLI, so they match the project's style and configuration in `components.json`. No hand-written copies.
+- **React:** Server Components by default, client components only where interaction needs them.
+
+A typical instruction is one line:
+
+```md
+Add a confirmation dialog. Use `pnpm dlx shadcn@latest add dialog`; don't write your own.
+```
+
+That one line saves a review round, because the result looks like every other component in the codebase.
+
+## Everything in one file
+
+The second failure is structural. Left alone, an agent loves to put everything into one file: data loading, formatting, metadata and markup in a single 300-line component. It works on the first try, so it's easy to accept. The problem shows up with the next change, which has no clean place to go.
+
+On this site each concern has a home. The blog post page is mostly imports:
+
+```tsx title="app/[locale]/blog/[slug]/page.tsx"
+import { PostHeader } from "@/components/blog/post-header";
+import { getAvailableLocales, getPost, getPosts } from "@/lib/content";
+import { MdxContent } from "@/lib/mdx";
+import { buildMetadata } from "@/lib/seo";
+import { blogPostingJsonLd } from "@/lib/structured-data";
+```
+
+Content loading lives in `lib/content.ts`, MDX compilation in `lib/mdx.tsx`, metadata in `lib/seo.ts`, structured data in `lib/structured-data.ts`, and the page just composes them. When an agent adds something, I tell it where the code belongs. When it ignores that, I reject the diff instead of patching it.
+
+For me, separation of concerns is what keeps a codebase workable when a lot of the code is written quickly.
+
+## Why I can review less
+
+I don't read every line an agent writes with the same attention. That would cancel out most of the speed. I review the critical parts closely: data flow, public interfaces, anything touching security, SEO or accessibility. With the rest I am pragmatic. If a layout looks right in the browser on mobile and desktop, I don't audit each Tailwind class.
+
+That only works because the repository checks the routine things for me:
+
+```json title="package.json"
+"scripts": {
+  "build": "next build",
+  "lint": "eslint",
+  "typecheck": "next typegen && tsc --noEmit",
+  "format:check": "prettier --check ."
+}
+```
+
+Strict TypeScript catches wrong shapes. ESLint catches wrong patterns. Prettier ends formatting discussions. The build fails on invalid frontmatter and on pages that accidentally become dynamic. Every agent change has to pass the same gates as mine before I even look at it.
+
+People who say "AI writes bad code" often skip this part. Without good local tooling, you either review everything line by line or trust the output blindly. With it, you can focus your review on the parts that matter.
+
+## How I decide what to hand over
+
+I don't have a formal process for this. It comes from experience. After years of front-end work I know which tasks will take long, which are boring, and which only look simple. Boring and well-defined goes to the agent. Small and precise I do myself. Anything that decides how the product works stays with me:
+
+- Product decisions: pricing, positioning, what MiniRemote or CupertinoUI should be.
+- UX and accessibility calls that shape how the interface feels to use.
+- Public API shape and long-lived architecture.
+- Merging anything critical I have not read.
+
+## Building for agents, too
+
+MiniRemote ships an MCP server so agents can operate a Mac. That doesn't mean an agent owns the product. Agents can automate the repetitive interaction loop, and I still decide what "done" looks like.
+
+With AI, speed is easy to get. What still takes experience is knowing what not to ship, and having tooling that catches it when you're about to.

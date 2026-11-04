@@ -49,6 +49,9 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --shadow-card: var(--shadow-card);
+  --shadow-card-hover: var(--shadow-card-hover);
+  --color-surface-glass: var(--surface-glass);
 }
 
 :root {
@@ -71,13 +74,19 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --ring: oklch(0.62 0.11 162);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
+  /* Layered, macOS-like elevation instead of flat 1px borders. */
+  --shadow-card:
+    0 0 0 1px oklch(0 0 0 / 6%), 0 1px 2px oklch(0 0 0 / 4%), 0 4px 12px -2px oklch(0 0 0 / 5%);
+  --shadow-card-hover:
+    0 0 0 1px oklch(0 0 0 / 8%), 0 2px 4px oklch(0 0 0 / 5%), 0 16px 32px -8px oklch(0 0 0 / 12%);
+  --surface-glass: oklch(1 0 0 / 72%);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -89,26 +98,32 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  /* Slightly tinted toward the brand hue, so dark mode reads as deliberate, not stock. */
+  --background: oklch(0.155 0.006 170);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --card: oklch(0.2 0.007 170);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+  --popover: oklch(0.2 0.007 170);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
+  --secondary: oklch(0.26 0.008 170);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.74 0 0);
+  --muted: oklch(0.26 0.008 170);
+  --muted-foreground: oklch(0.74 0.006 170);
   --brand: oklch(0.8 0.14 162);
   --brand-foreground: oklch(0.2 0.03 162);
-  --accent: oklch(0.269 0 0);
+  --accent: oklch(0.26 0.008 170);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.7 0.12 162);
+  --shadow-card:
+    0 0 0 1px oklch(1 0 0 / 8%), 0 1px 2px oklch(0 0 0 / 30%), 0 4px 12px -2px oklch(0 0 0 / 30%);
+  --shadow-card-hover:
+    0 0 0 1px oklch(1 0 0 / 12%), 0 2px 4px oklch(0 0 0 / 30%), 0 16px 32px -8px oklch(0 0 0 / 50%);
+  --surface-glass: oklch(0.2 0.007 170 / 70%);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -146,6 +161,41 @@
   }
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-ring;
+  }
+  h1,
+  h2,
+  h3 {
+    font-feature-settings: "ss01", "cv11";
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Translucent, macOS-style material for bars and sheets. */
+@utility material {
+  background-color: var(--surface-glass);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* Elevated card surface with a subtle lift on hover. */
+@utility surface-card {
+  @apply rounded-2xl bg-card shadow-card transition-[box-shadow,translate] duration-200 ease-out;
+  &:where(.interactive):hover {
+    @apply -translate-y-0.5 shadow-card-hover;
+  }
+}
+
+/* Shared-element morph between a project card cover and its case study. */
+::view-transition-group(.morph) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+@keyframes via-blur {
+  30% {
+    filter: blur(3px);
   }
 }
 

@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Igor Duspara — Senior Front-End Developer & Product Builder",
+    "title": "Igor Duspara · Senior Front-End Developer & Product Builder",
     "description": "I'm Igor Duspara, a senior front-end developer in Munich with {years}+ years of experience, building fast web products and apps like MiniRemote.",
-    "ogAlt": "Igor Duspara — Senior Front-End Developer & Product Builder"
+    "ogAlt": "Igor Duspara · Senior Front-End Developer & Product Builder"
   },
   "a11y": {
     "skipToContent": "Skip to content",
@@ -14,7 +14,9 @@
     "closeMenu": "Close menu",
     "home": "Igor Duspara, home",
     "opensInNewTab": "(opens in a new tab)",
-    "socialLinks": "Social profiles"
+    "socialLinks": "Social profiles",
+    "openCommand": "Open command palette",
+    "commandPalette": "Command palette"
   },
   "nav": {
     "about": "About",
@@ -31,10 +33,28 @@
     "dark": "Dark",
     "switchTo": "Switch theme (current: {current})"
   },
+  "command": {
+    "placeholder": "Jump to a page, project or action…",
+    "empty": "No matches.",
+    "groups": {
+      "navigation": "Navigation",
+      "projects": "Projects",
+      "actions": "Actions",
+      "theme": "Theme",
+      "language": "Language"
+    },
+    "copyEmail": "Copy email address",
+    "emailCopied": "Email copied",
+    "themeSystem": "Use system theme",
+    "themeLight": "Use light theme",
+    "themeDark": "Use dark theme",
+    "languageEn": "Switch to English",
+    "languageDe": "Switch to German"
+  },
   "hero": {
-    "eyebrow": "Hi, I'm Igor 👋",
-    "title": "I build fast, thoughtful products for the web and the Mac.",
-    "lead": "I'm a senior front-end developer at Finanztip, based in Munich. In my spare time I build my own products, like MiniRemote, CupertinoUI and Shadcn Builder.",
+    "eyebrow": "Building MiniRemote",
+    "title": "I design, build and ship my own products for the web and the Mac.",
+    "lead": "By day I'm a senior front-end developer at Finanztip. The rest of the time I build MiniRemote, CupertinoUI and Shadcn Builder.",
     "location": "Munich, Germany",
     "ctaPrimary": "See my work",
     "ctaSecondary": "Get in touch",
@@ -44,20 +64,30 @@
     "label": "At a glance",
     "years": "years building for the web",
     "products": "products I've launched",
-    "frontend": "of my work is front-end",
+    "lighthouse": "Lighthouse on every page",
     "stars": "GitHub stars on Shadcn Builder"
   },
   "about": {
     "title": "About me",
     "paragraphs": [
-      "I've been building for the web since 2006. I started out as a full-stack developer in Croatia, worked for years as a freelancer for companies like CHECK24, and today I focus on the front end, where design, usability and engineering meet.",
+      "I've been building for the web since 2006. I started out as a full-stack developer in Croatia, spent years as an employee at companies like CHECK24, and today I focus on the front end, where design, usability and engineering meet.",
       "I care about the details people feel but rarely notice: pages that load instantly, interfaces that work with a keyboard and a screen reader, and code that the next developer enjoys reading. My background in SEO and marketing helps me build things that are not only well made, but also found and used.",
       "Outside my day job I ship my own products. I like owning the whole journey, from the first prototype and the design to pricing, launch and support."
-    ]
+    ],
+    "skillsTitle": "What I work with"
   },
   "ai": {
     "title": "How I work with AI",
     "lead": "AI is part of my daily workflow. It makes me faster, but it doesn't replace judgement, so I'm deliberate about where I use it and where I don't.",
+    "snippetLabel": "MiniRemote MCP: agents driving a Mac",
+    "snippet": [
+      "$ claude",
+      "> Use MiniRemote to open Safari and check miniremote.app",
+      "⏺ miniremote:screenshot → captured",
+      "⏺ miniremote:click → toolbar → Safari",
+      "⏺ miniremote:type → miniremote.app ↵",
+      "✓ Page loaded. Retina-sharp on the virtual screen."
+    ],
     "principles": [
       {
         "title": "Agents do the legwork, I make the calls",
@@ -94,6 +124,11 @@
     "viewAll": "View all projects",
     "viewProject": "Read the case study",
     "visit": "Visit {name}",
+    "visitShort": "Visit",
+    "downloadMac": "Download for Mac",
+    "installCommand": "pnpm dlx shadcn add @cupertinoui/button",
+    "copyCommand": "Copy install command",
+    "commandCopied": "Copied",
     "since": "Since",
     "role": "My role",
     "stack": "Stack",
@@ -125,7 +160,7 @@
   },
   "contact": {
     "title": "Let's work together",
-    "lead": "Have a project, a question or just want to say hello? I usually reply within a few days.",
+    "lead": "Curious about MiniRemote, CupertinoUI, or a front-end collaboration? I usually reply within a few days.",
     "email": "Email me",
     "orFind": "You can also find me on"
   },
@@ -133,7 +168,8 @@
     "rights": "All rights reserved.",
     "imprint": "Imprint",
     "privacy": "Privacy",
-    "builtWith": "I built this site with Next.js, Tailwind CSS and shadcn/ui."
+    "builtWith": "I built this site with Next.js, Tailwind CSS and shadcn/ui.",
+    "proof": "Lighthouse 100 · 0 cookies · 0 trackers"
   },
   "notFound": {
     "title": "Page not found",

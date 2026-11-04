@@ -30,7 +30,7 @@ export function MobileNav({ items, labels }: MobileNavProps) {
       <div
         id={POPOVER_ID}
         popover="auto"
-        className="fixed inset-y-0 right-0 left-auto m-0 h-dvh max-h-none w-72 max-w-[85vw] border-l bg-popover p-6 text-popover-foreground shadow-lg backdrop:bg-black/20"
+        className="fixed inset-y-0 right-0 left-auto m-0 h-dvh max-h-none w-72 max-w-[85vw] border-l material p-6 text-popover-foreground shadow-lg backdrop:bg-black/20"
       >
         <div className="flex items-center justify-between">
           <p className="font-semibold">{labels.title}</p>

@@ -1,10 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
 
+import icon from "@/assets/icon.svg";
 import { Container } from "@/components/shared/container";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { localePath } from "@/i18n/paths";
 
+import { CommandMenuTrigger } from "./command-menu";
 import { LocaleSwitcher } from "./locale-switcher";
 import { MobileNav } from "./mobile-nav";
 import { NavLinks } from "./nav-links";
@@ -15,14 +18,22 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: Dictionary 
   const items = getNavItems(locale, dict);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur supports-backdrop-filter:bg-background/70">
+    <header className="sticky top-0 z-40 border-b border-border/40 material">
       <Container className="flex h-16 items-center justify-between gap-4">
         <Link
           href={localePath(locale)}
           aria-label={dict.a11y.home}
-          className="inline-flex min-h-10 items-center rounded-lg font-semibold tracking-tight focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+          className="inline-flex min-h-10 items-center gap-2.5 rounded-lg font-semibold tracking-tight focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
         >
-          Igor Duspara
+          <Image
+            src={icon}
+            alt=""
+            width={28}
+            height={28}
+            className="size-7 rounded-[7px]"
+            priority
+          />
+          <span className="hidden sm:inline">Igor Duspara</span>
         </Link>
 
         <nav aria-label={dict.a11y.mainNav} className="hidden md:block">
@@ -30,6 +41,7 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: Dictionary 
         </nav>
 
         <div className="flex items-center gap-1.5">
+          <CommandMenuTrigger label={dict.a11y.openCommand} />
           <LocaleSwitcher current={locale} label={dict.a11y.languageNav} />
           <ThemeToggle labels={dict.theme} />
           <MobileNav

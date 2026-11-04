@@ -1,0 +1,106 @@
+---
+title: Wo Coding-Agenten helfen und wo ich entscheide
+description: Wie ich Claude und Codex für Tempo nutze, ohne Architektur, Struktur oder Review aufzuweichen.
+date: 2026-01-20
+draft: true
+---
+
+KI gehört zu meinem Alltag. Sie macht mich schneller, ersetzt aber kein Urteil. Bei Geschmack, Risiko oder „ship it“ hat sie keine Stimme. Agenten übernehmen viel Arbeit. Die Entscheidungen treffe ich.
+
+In diesem Beitrag geht es darum, wie das praktisch aussieht: was ich abgebe, was ich behalte, was schiefgeht und warum ich weniger reviewe, als man vielleicht denkt.
+
+## Zwei Tools, zwei Kontexte
+
+Für meine privaten Projekte (diese Site, [MiniRemote](/de/portfolio/miniremote), [CupertinoUI](/de/portfolio/cupertino-ui)) nutze ich Claude, im Job Codex. Diese Aufteilung habe ich bewusst gewählt. Ich will nicht ein Tool gut kennen und das andere nur aus Blogbeiträgen. Beide täglich an echtem Code mit echten Deadlines zu nutzen zeigt mir, was jedes gut kann und wo es danebenliegt.
+
+Das meiste, was ich gelernt habe, gilt für beide, deshalb trenne ich sie im Folgenden nicht.
+
+## Wo Agenten mir am meisten Zeit sparen
+
+Drei Arten von Arbeit haben sich für mich am stärksten verändert.
+
+**Architekturplanung.** Damit meine ich nicht die Entscheidung selbst, sondern das Durchspielen der Optionen. Ich beschreibe die Rahmenbedingungen und frage nach zwei oder drei Varianten, etwas zu strukturieren, mit ausformulierten Abwägungen. Der Agent legt Optionen schnell auf den Tisch, die ich sonst eine Stunde auf Papier skizzieren würde. Dann wähle ich eine, und oft ändere ich sie noch. Was ich davon habe, ist ein guter erster Überblick über die Optionen. Die Wahl bleibt bei mir.
+
+**Dokumentation.** READMEs, Setup-Hinweise, die Erklärung, warum ein Modul existiert. Wichtig, und trotzdem das Erste, was ich unter Zeitdruck weglassen würde. Ein Agent schreibt aus dem Code eine solide erste Fassung. Ich korrigiere dann die Stellen, an denen es auf die Absicht ankommt.
+
+**Tests.** Die offensichtlichen Fälle, die Randfälle, die ich vorgebe, und die langweiligen Fixtures drumherum. Das zahlt sich doppelt aus, denn wenn die Tests einmal da sind, fangen sie auch den nächsten Fehler des Agenten.
+
+Alle drei sind gut verstanden, etwas mühsam und leicht zu prüfen. Dort funktionieren Agenten für mich am besten.
+
+## Wo es mich Zeit kostet
+
+Kleine, präzise Änderungen. Wenn ich genau weiß, welche Zeile sich ändern muss (ein Klassenname, eine Bedingung, ein Textfix), dauert der Prompt länger als die Änderung selbst. Danach muss ich trotzdem den Diff lesen und prüfen, ob der Agent nebenan nichts „verbessert“ hat.
+
+Meine Regel: Wenn das Beschreiben der Änderung länger dauert als das Tippen, mache ich sie selbst.
+
+## Agenten erfinden ihr eigenes Framework
+
+Das häufigste Problem, das ich sehe, ist Code, der funktioniert, aber ignoriert, wie das Framework gedacht ist.
+
+Bittet man um einen Dialog, bekommt man unter Umständen ein selbstgebautes Modal mit eigenem Fokus-Handling statt der shadcn/ui-Komponente, die das Projekt längst nutzt. Bittet man um eine Next.js-Route, bekommt man womöglich die Konventionen vom letzten Jahr: `middleware.ts` statt `proxy.ts` oder clientseitiges Datenladen auf einer Seite, die eine Server Component sein sollte. Der Agent füllt Lücken mit eigenen Definitionen, und die sehen plausibel aus.
+
+Deshalb bin ich in einem Punkt strikt: Der Agent folgt den Richtlinien des Frameworks, nicht seinen eigenen. Praktisch heißt das:
+
+- **Next.js:** vor dem Schreiben die Docs lesen, die mit der installierten Version kommen. Die `AGENTS.md` dieses Repos sagt genau das, weil Next.js 16 genug geändert hat, um Trainingsdaten unzuverlässig zu machen.
+- **shadcn/ui:** Komponenten über die CLI hinzufügen, damit sie zu Stil und Konfiguration in `components.json` passen. Keine handgeschriebenen Kopien.
+- **React:** standardmäßig Server Components, Client Components nur dort, wo Interaktion sie braucht.
+
+Eine typische Anweisung ist eine Zeile:
+
+```md
+Add a confirmation dialog. Use `pnpm dlx shadcn@latest add dialog`; don't write your own.
+```
+
+Diese eine Zeile spart eine Review-Runde, weil das Ergebnis aussieht wie jede andere Komponente im Code.
+
+## Alles in einer Datei
+
+Der zweite Fehler ist strukturell. Sich selbst überlassen, packt ein Agent gerne alles in eine Datei: Datenladen, Formatierung, Metadaten und Markup in einer 300-Zeilen-Komponente. Das funktioniert beim ersten Versuch, deshalb nimmt man es leicht an. Das Problem zeigt sich bei der nächsten Änderung, die keinen sauberen Platz mehr hat.
+
+Auf dieser Site hat jedes Anliegen sein Zuhause. Die Seite eines Blogbeitrags besteht größtenteils aus Imports:
+
+```tsx title="app/[locale]/blog/[slug]/page.tsx"
+import { PostHeader } from "@/components/blog/post-header";
+import { getAvailableLocales, getPost, getPosts } from "@/lib/content";
+import { MdxContent } from "@/lib/mdx";
+import { buildMetadata } from "@/lib/seo";
+import { blogPostingJsonLd } from "@/lib/structured-data";
+```
+
+Inhalte laden passiert in `lib/content.ts`, MDX-Kompilierung in `lib/mdx.tsx`, Metadaten in `lib/seo.ts`, strukturierte Daten in `lib/structured-data.ts`. Die Seite setzt sie nur zusammen. Wenn ein Agent etwas ergänzt, sage ich ihm, wohin der Code gehört. Ignoriert er das, verwerfe ich den Diff, statt ihn zu flicken.
+
+Für mich hält Separation of Concerns eine Codebasis beherrschbar, wenn viel Code schnell entsteht.
+
+## Warum ich weniger reviewen kann
+
+Ich lese nicht jede Zeile, die ein Agent schreibt, mit derselben Aufmerksamkeit. Das würde den Großteil des Tempos wieder auffressen. Die kritischen Teile prüfe ich genau: Datenfluss, öffentliche Schnittstellen, alles, was Sicherheit, SEO oder Accessibility berührt. Beim Rest bin ich pragmatisch. Sieht ein Layout im Browser auf Mobil und Desktop richtig aus, prüfe ich nicht jede Tailwind-Klasse einzeln.
+
+Das funktioniert nur, weil das Repository die Routinedinge für mich prüft:
+
+```json title="package.json"
+"scripts": {
+  "build": "next build",
+  "lint": "eslint",
+  "typecheck": "next typegen && tsc --noEmit",
+  "format:check": "prettier --check ."
+}
+```
+
+Striktes TypeScript fängt falsche Datenformen. ESLint fängt falsche Muster. Prettier beendet Formatierungsdiskussionen. Der Build scheitert bei ungültigem Frontmatter und bei Seiten, die versehentlich dynamisch werden. Jede Änderung eines Agenten muss durch dieselben Tore wie meine, bevor ich sie mir überhaupt ansehe.
+
+Wer sagt, „KI schreibt schlechten Code“, lässt diesen Teil oft weg. Ohne gutes lokales Tooling muss man entweder alles Zeile für Zeile reviewen oder dem Ergebnis blind vertrauen. Mit Tooling kann man sich beim Review auf das Wichtige konzentrieren.
+
+## Wie ich entscheide, was ich abgebe
+
+Dafür habe ich keinen festen Prozess. Das kommt aus der Erfahrung. Nach Jahren im Front-End weiß ich, welche Aufgaben lange dauern, welche langweilig sind und welche nur einfach aussehen. Langweilig und klar definiert geht an den Agenten. Klein und präzise mache ich selbst. Alles, was entscheidet, wie das Produkt funktioniert, bleibt bei mir:
+
+- Produktentscheidungen: Pricing, Positionierung, was MiniRemote oder CupertinoUI sein sollen.
+- UX- und Accessibility-Entscheidungen, die prägen, wie sich die Oberfläche anfühlt.
+- Öffentliche API-Form und langlebige Architektur.
+- Mergen von etwas Kritischem, das ich nicht gelesen habe.
+
+## Auch für Agenten bauen
+
+MiniRemote liefert einen MCP-Server, damit Agenten einen Mac bedienen können. Das heißt nicht, dass ein Agent das Produkt besitzt. Agenten können die wiederkehrende Interaktionsschleife automatisieren, und ich entscheide weiterhin, was „fertig“ bedeutet.
+
+Mit KI ist Tempo leicht zu haben. Erfahrung braucht es weiterhin, um zu wissen, was man nicht ausliefert, und um Tooling zu haben, das es merkt, bevor es passiert.

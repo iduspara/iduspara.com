@@ -11,7 +11,7 @@ export function ContactCta({ dict }: { dict: Dictionary }) {
   return (
     <section id="contact" aria-labelledby="contact-heading" className="scroll-mt-20 py-16 sm:py-24">
       <Container>
-        <div className="rounded-3xl border bg-muted/40 px-6 py-12 text-center sm:px-12 sm:py-16">
+        <div className="surface-card px-6 py-12 text-center sm:px-12 sm:py-16">
           <h2
             id="contact-heading"
             className="font-heading text-3xl font-semibold tracking-tight text-balance sm:text-4xl"

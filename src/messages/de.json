@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Igor Duspara — Senior Front-End-Entwickler & Product Builder",
+    "title": "Igor Duspara · Senior Front-End-Entwickler & Product Builder",
     "description": "Ich bin Igor Duspara, Senior Front-End-Entwickler in München mit über {years} Jahren Erfahrung. Ich baue schnelle Web-Produkte und Apps wie MiniRemote.",
-    "ogAlt": "Igor Duspara — Senior Front-End-Entwickler & Product Builder"
+    "ogAlt": "Igor Duspara · Senior Front-End-Entwickler & Product Builder"
   },
   "a11y": {
     "skipToContent": "Zum Inhalt springen",
@@ -14,7 +14,9 @@
     "closeMenu": "Menü schließen",
     "home": "Igor Duspara, Startseite",
     "opensInNewTab": "(öffnet in neuem Tab)",
-    "socialLinks": "Soziale Profile"
+    "socialLinks": "Soziale Profile",
+    "openCommand": "Befehlspalette öffnen",
+    "commandPalette": "Befehlspalette"
   },
   "nav": {
     "about": "Über mich",
@@ -31,10 +33,28 @@
     "dark": "Dunkel",
     "switchTo": "Design wechseln (aktuell: {current})"
   },
+  "command": {
+    "placeholder": "Zu Seite, Projekt oder Aktion springen…",
+    "empty": "Keine Treffer.",
+    "groups": {
+      "navigation": "Navigation",
+      "projects": "Projekte",
+      "actions": "Aktionen",
+      "theme": "Design",
+      "language": "Sprache"
+    },
+    "copyEmail": "E-Mail-Adresse kopieren",
+    "emailCopied": "E-Mail kopiert",
+    "themeSystem": "Systemdesign verwenden",
+    "themeLight": "Helles Design verwenden",
+    "themeDark": "Dunkles Design verwenden",
+    "languageEn": "Zu Englisch wechseln",
+    "languageDe": "Zu Deutsch wechseln"
+  },
   "hero": {
-    "eyebrow": "Hallo, ich bin Igor 👋",
-    "title": "Ich baue schnelle, durchdachte Produkte für das Web und den Mac.",
-    "lead": "Ich bin Senior Front-End-Entwickler bei Finanztip und lebe in München. In meiner Freizeit entwickle ich eigene Produkte wie MiniRemote, CupertinoUI und Shadcn Builder.",
+    "eyebrow": "Baue MiniRemote",
+    "title": "Ich entwerfe, baue und launche eigene Produkte für das Web und den Mac.",
+    "lead": "Tagsüber bin ich Senior Front-End-Entwickler bei Finanztip. Den Rest der Zeit baue ich MiniRemote, CupertinoUI und Shadcn Builder.",
     "location": "München, Deutschland",
     "ctaPrimary": "Meine Arbeiten",
     "ctaSecondary": "Kontakt aufnehmen",
@@ -44,20 +64,30 @@
     "label": "Auf einen Blick",
     "years": "Jahre Web-Entwicklung",
     "products": "eigene Produkte gelauncht",
-    "frontend": "meiner Arbeit ist Front-End",
+    "lighthouse": "Lighthouse auf jeder Seite",
     "stars": "GitHub-Sterne für Shadcn Builder"
   },
   "about": {
     "title": "Über mich",
     "paragraphs": [
-      "Ich entwickle seit 2006 für das Web. Angefangen habe ich als Full-Stack-Entwickler in Kroatien, danach war ich viele Jahre freiberuflich für Unternehmen wie CHECK24 tätig. Heute konzentriere ich mich auf das Front-End, dort, wo Design, Usability und Technik zusammenkommen.",
+      "Ich entwickle seit 2006 für das Web. Angefangen habe ich als Full-Stack-Entwickler in Kroatien, danach war ich viele Jahre als Angestellter bei Unternehmen wie CHECK24 tätig. Heute konzentriere ich mich auf das Front-End, dort, wo Design, Usability und Technik zusammenkommen.",
       "Mir sind die Details wichtig, die man spürt, aber selten bemerkt: Seiten, die sofort laden, Oberflächen, die mit Tastatur und Screenreader funktionieren, und Code, den die nächste Entwicklerin gerne liest. Meine Erfahrung in SEO und Marketing hilft mir, Dinge zu bauen, die nicht nur gut gemacht sind, sondern auch gefunden und genutzt werden.",
       "Neben meinem Job entwickle ich eigene Produkte. Ich mag es, den ganzen Weg selbst zu gehen: vom ersten Prototyp und dem Design bis zu Preisgestaltung, Launch und Support."
-    ]
+    ],
+    "skillsTitle": "Womit ich arbeite"
   },
   "ai": {
     "title": "Wie ich mit KI arbeite",
     "lead": "KI ist fester Bestandteil meines Arbeitsalltags. Sie macht mich schneller, ersetzt aber kein Urteilsvermögen. Deshalb entscheide ich bewusst, wo ich sie einsetze und wo nicht.",
+    "snippetLabel": "MiniRemote MCP: Agenten steuern einen Mac",
+    "snippet": [
+      "$ claude",
+      "> Use MiniRemote to open Safari and check miniremote.app",
+      "⏺ miniremote:screenshot → captured",
+      "⏺ miniremote:click → toolbar → Safari",
+      "⏺ miniremote:type → miniremote.app ↵",
+      "✓ Page loaded. Retina-sharp on the virtual screen."
+    ],
     "principles": [
       {
         "title": "Agenten erledigen die Fleißarbeit, ich treffe die Entscheidungen",
@@ -94,6 +124,11 @@
     "viewAll": "Alle Projekte ansehen",
     "viewProject": "Zur Fallstudie",
     "visit": "{name} besuchen",
+    "visitShort": "Besuchen",
+    "downloadMac": "Für Mac laden",
+    "installCommand": "pnpm dlx shadcn add @cupertinoui/button",
+    "copyCommand": "Install-Befehl kopieren",
+    "commandCopied": "Kopiert",
     "since": "Seit",
     "role": "Meine Rolle",
     "stack": "Stack",
@@ -125,7 +160,7 @@
   },
   "contact": {
     "title": "Lass uns zusammenarbeiten",
-    "lead": "Du hast ein Projekt, eine Frage oder möchtest einfach Hallo sagen? Ich antworte meist innerhalb weniger Tage.",
+    "lead": "Interesse an MiniRemote, CupertinoUI oder einer Front-End-Zusammenarbeit? Ich antworte meist innerhalb weniger Tage.",
     "email": "Schreib mir",
     "orFind": "Du findest mich auch auf"
   },
@@ -133,21 +168,22 @@
     "rights": "Alle Rechte vorbehalten.",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
-    "builtWith": "Ich habe diese Seite mit Next.js, Tailwind CSS und shadcn/ui gebaut."
+    "builtWith": "Ich habe diese Seite mit Next.js, Tailwind CSS und shadcn/ui gebaut.",
+    "proof": "Lighthouse 100 · 0 Cookies · 0 Tracker"
   },
   "notFound": {
     "title": "Seite nicht gefunden",
     "lead": "Ich konnte die gesuchte Seite leider nicht finden. Vielleicht wurde sie verschoben oder hat nie existiert.",
-    "home": "Zur Startseite"
+    "home": "Zurück zur Startseite"
   },
   "imprint": {
     "title": "Impressum",
     "lead": "Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz).",
-    "metaDescription": "Impressum von iduspara.com: wer für diese Website verantwortlich ist, wie du mich erreichst und wie ich für Inhalte, Links und Urheberrecht hafte."
+    "metaDescription": "Impressum von iduspara.com: wer für diese Website verantwortlich ist, wie du mich erreichst, und meine Haftung für Inhalte, Links und Urheberrecht."
   },
   "privacy": {
     "title": "Datenschutzerklärung",
     "lead": "Wie ich mit deinen Daten auf dieser Website umgehe.",
-    "metaDescription": "Wie ich mit deinen Daten auf iduspara.com umgehe: keine Cookies, kein Tracking, keine Analyse. Details zu Hosting, E-Mail-Kontakt und deinen DSGVO-Rechten."
+    "metaDescription": "Wie ich mit deinen Daten auf iduspara.com umgehe: keine Cookies, kein Tracking, keine Analytics. Details zu Hosting, E-Mail-Kontakt und deinen Rechten nach der DSGVO."
   }
 }

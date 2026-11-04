@@ -5,7 +5,6 @@ import { ExperienceTimeline } from "@/components/sections/experience-timeline";
 import { FeaturedProjects } from "@/components/sections/featured-projects";
 import { Hero } from "@/components/sections/hero";
 import { LatestPosts } from "@/components/sections/latest-posts";
-import { Skills } from "@/components/sections/skills";
 import { Stats } from "@/components/sections/stats";
 import { JsonLd } from "@/components/shared/json-ld";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
@@ -34,12 +33,11 @@ export default async function HomePage() {
         ]}
       />
       <Hero locale={locale} dict={dict} />
-      <Stats dict={dict} years={yearsOfExperience} products={projects.length} />
-      <About dict={dict} />
-      <AiWorkflow dict={dict} />
       <FeaturedProjects locale={locale} dict={dict} projects={featured.slice(0, 4)} />
+      <Stats dict={dict} years={yearsOfExperience} products={projects.length} />
+      <AiWorkflow dict={dict} />
+      <About locale={locale} dict={dict} />
       <ExperienceTimeline locale={locale} dict={dict} years={yearsOfExperience} />
-      <Skills locale={locale} dict={dict} />
       <LatestPosts locale={locale} dict={dict} posts={posts.slice(0, 3).map((p) => p.meta)} />
       <ContactCta dict={dict} />
     </>

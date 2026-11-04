@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { locale as localeParam } from "next/root-params";
 
+import { CommandMenu } from "@/components/layout/command-menu";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SkipLink } from "@/components/layout/skip-link";
@@ -11,6 +12,7 @@ import { siteConfig } from "@/config/site";
 import { hasLocale, localeTags, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getBuildInfo } from "@/lib/build-time";
+import { getProjects } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 import { formatMessage } from "@/utils/format-message";
 
@@ -35,7 +37,7 @@ export function generateStaticParams() {
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1f1e" },
   ],
 };
 
@@ -68,7 +70,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function LocaleLayout({ children }: LayoutProps<"/[locale]">) {
   const locale = await localeParam();
   if (!hasLocale(locale)) notFound();
-  const dict = await getDictionary(locale);
+  const [dict, projects] = await Promise.all([getDictionary(locale), getProjects(locale)]);
 
   return (
     <html
@@ -89,6 +91,11 @@ export default async function LocaleLayout({ children }: LayoutProps<"/[locale]"
             {children}
           </main>
           <SiteFooter locale={locale} dict={dict} />
+          <CommandMenu
+            locale={locale}
+            dict={dict}
+            projects={projects.map(({ meta }) => ({ slug: meta.slug, title: meta.title }))}
+          />
         </ThemeProvider>
       </body>
     </html>

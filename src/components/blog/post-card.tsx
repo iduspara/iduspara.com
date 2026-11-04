@@ -6,8 +6,6 @@ import type { PostMeta } from "@/types/content";
 import { formatDate } from "@/utils/format-date";
 import { formatMessage } from "@/utils/format-message";
 
-import { TagList } from "./tag-list";
-
 export function PostCard({
   post,
   dict,
@@ -33,9 +31,6 @@ export function PostCard({
         </Link>
       </Heading>
       <p className="mt-2 text-pretty text-muted-foreground">{post.description}</p>
-      <div className="mt-4">
-        <TagList tags={post.tags} />
-      </div>
     </article>
   );
 }

@@ -24,6 +24,14 @@ export async function SiteFooter({ locale, dict }: { locale: Locale; dict: Dicti
             © {year} {siteConfig.name}. {dict.footer.rights}
           </p>
           <p>{dict.footer.builtWith}</p>
+          <p>
+            <Link
+              href={localePath(locale, "/blog/relaunching-my-site-with-nextjs-16")}
+              className="underline-offset-4 hover:text-foreground hover:underline"
+            >
+              {dict.footer.proof}
+            </Link>
+          </p>
         </div>
         <div className="flex flex-col gap-3 sm:items-end">
           <SocialLinks label={dict.a11y.socialLinks} newTabLabel={dict.a11y.opensInNewTab} />

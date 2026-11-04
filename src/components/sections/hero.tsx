@@ -15,10 +15,13 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
     <section aria-labelledby="hero-heading" className="pt-12 pb-16 sm:pt-20 sm:pb-20">
       <Container className="grid items-center gap-10 md:grid-cols-[1fr_auto] md:gap-16">
         <div>
-          <p className="text-sm font-medium text-brand">{dict.hero.eyebrow}</p>
+          <p className="inline-flex items-center gap-2 rounded-full bg-brand/10 px-3 py-1 text-sm font-medium text-brand">
+            <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-brand" />
+            {dict.hero.eyebrow}
+          </p>
           <h1
             id="hero-heading"
-            className="mt-3 font-heading text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl"
+            className="mt-4 font-heading text-4xl font-semibold tracking-[-0.03em] text-balance sm:text-5xl lg:text-6xl"
           >
             {dict.hero.title}
           </h1>
@@ -56,7 +59,7 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             loading="eager"
             fetchPriority="high"
             placeholder="blur"
-            className="size-32 rounded-full border object-cover shadow-sm md:size-56"
+            className="size-32 rounded-full object-cover shadow-card md:size-56"
           />
         </div>
       </Container>

@@ -1,0 +1,81 @@
+---
+title: So bleibe ich bei Lighthouse 100 auf einer zweisprachigen Next.js-Seite
+description: Die Budgets, Bild- und Font-Entscheidungen und was ich bewusst weglasse, damit iduspara.com bei Lighthouse 100 bleibt.
+date: 2025-09-09
+draft: true
+---
+
+Ein perfekter Lighthouse-Score auf einer einseitigen Marketing-Site ist leicht. Ihn auf einem zweisprachigen Portfolio mit MDX, Open-Graph-Bildern und einer Befehlspalette zu halten, macht deutlich mehr Arbeit. Mir ist der Score wichtig, weil er mir zeigt, ob ich sorgfältig gebaut habe.
+
+## Was ich tatsächlich prüfe
+
+Ich lasse Lighthouse auf drei Seitentypen laufen, jeweils auf Englisch und auf Deutsch: Startseite, Portfolio-Fallstudie und Blogbeitrag. Laborwerte auf meinem MacBook sind der Bestfall, deshalb zählt der gedrosselte Mobile-Lauf. Felddaten werden wichtiger, sobald die Site Traffic hat. Bis dahin versuche ich, keine Regressionen auszuliefern, die ich lokal hätte finden können.
+
+## Standardmäßig statisch, vom Build erzwungen
+
+Jede Route ist eine Server Component und wird beim Build vollständig vorgerendert. Dafür verlasse ich mich nicht auf Disziplin. Ein Export im Root-Layout macht daraus eine Regel:
+
+```tsx title="app/[locale]/layout.tsx"
+/** Every route must be fully prerendered at build time. */
+export const ensureStatic = "navigation";
+```
+
+Lese ich versehentlich ein Cookie oder einen Header, schlägt der Build fehl, statt die Seite stillschweigend dynamisch zu machen.
+
+Das einzige Client-JavaScript steckt in Interaktion, die ich wirklich brauche: Design-Umschalter, mobiles Menü, Sprachumschaltung und die Befehlspalette. Wörterbücher bleiben serverseitiges JSON. Syntax-Highlighting für MDX läuft beim Build mit Shiki, die Codeblöcke in diesem Beitrag kosten im Browser also nichts.
+
+## Schriften ohne Layoutsprung
+
+Geist und Geist Mono lade ich über `next/font`. Das hostet die Dateien selbst und erzeugt größenangepasste Fallbacks. Die Mono-Schrift kommt nur in Codeblöcken vor und wird deshalb nicht vorgeladen. Die meisten Seiten brauchen sie nie:
+
+```tsx title="app/[locale]/layout.tsx"
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"], display: "swap" });
+/** Only used in code blocks, so it is not preloaded. */
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+});
+```
+
+Es gibt keine Font-Requests an Dritte und keinen sichtbaren Sprung, wenn die Schrift geladen ist.
+
+## Bilder
+
+`next/image` liefert zuerst AVIF aus und fällt auf WebP zurück:
+
+```ts title="next.config.ts"
+images: {
+  formats: ["image/avif", "image/webp"],
+  qualities: [75, 85],
+},
+```
+
+Entscheidend ist `sizes`. Das Porträt im Hero ist auf dem Handy 128 px und ab dem `md`-Breakpoint 224 px groß, und genau das sagt das Attribut. Sonst nimmt der Browser `100vw` an und lädt ein um ein Vielfaches zu großes Bild:
+
+```tsx title="components/sections/hero.tsx"
+<Image
+  src={avatar}
+  alt={dict.hero.avatarAlt}
+  width={224}
+  height={224}
+  sizes="(min-width: 768px) 224px, 128px"
+  quality={85}
+  loading="eager"
+  fetchPriority="high"
+  placeholder="blur"
+/>
+```
+
+Ein falsches `sizes` am Hero-Bild schadet dem LCP mehr, als die meisten React-Optimierungen wieder gutmachen können.
+
+Ein weniger offensichtlicher Trick: Auf dem Handy nutzen Projektkarten kleine Thumbnails, und das Cover einer Fallstudie steht unter dem Text. Dadurch ist das LCP-Element eine Überschrift statt eines Bildes, und Text ist unter Lighthouses simulierter Mobile-Drosselung viel günstiger zu zeichnen.
+
+## Was ich bewusst weglasse
+
+Keine Analytics-Skripte, kein Cookie-Banner, kein Chat-Widget, kein schweres UI-Kit „für alle Fälle“. Jedes davon bringt ein Feature und kostet Performance und Privatsphäre. Auf einer persönlichen Site lohnt sich das für mich nicht.
+
+## Regressionen fangen
+
+Zod prüft MDX-Frontmatter beim Build, und statische Generierung heißt: Ein dynamischer Ausrutscher zeigt sich als fehlgeschlagener Build. Für Performance habe ich eine Regel: Bevor ich etwas merge, das Layout, Fonts, Bilder oder Third-Party-Code betrifft, lasse ich Lighthouse noch einmal über die drei Seitentypen oben laufen.

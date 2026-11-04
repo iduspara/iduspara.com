@@ -6,6 +6,8 @@ export const siteConfig = {
   location: "Munich, Germany",
   careerStart: 2006,
   xHandle: "@igor_duspara",
+  /** Display figure for Shadcn Builder; update when the GitHub count moves. */
+  githubStars: "600+",
   socials: {
     github: "https://github.com/iduspara",
     linkedin: "https://www.linkedin.com/in/igor-duspara-b97aa1300/",

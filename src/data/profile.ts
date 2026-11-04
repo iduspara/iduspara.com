@@ -46,7 +46,7 @@ export const experience: Experience[] = [
     company: "CHECK24 GmbH",
     url: "https://www.check24.de",
     role: { en: "Full-Stack Developer", de: "Full-Stack-Entwickler" },
-    employment: { en: "Freelance", de: "Freiberuflich" },
+    employment: { en: "Full-time", de: "Festanstellung" },
     start: "2013-08",
     end: "2019-02",
     summary: {
