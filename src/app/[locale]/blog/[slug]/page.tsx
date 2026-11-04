@@ -38,7 +38,6 @@ export async function generateMetadata({
     type: "article",
     publishedTime: post.meta.date,
     modifiedTime: post.meta.updated,
-    tags: post.meta.tags,
     availableLocales: await getAvailableLocales("blog", slug, locales),
   });
 }

@@ -1,0 +1,78 @@
+---
+title: Context Engineering für eine Site und Produkte, die ich allein pflege
+description: Wie ich Cursor und Claude briefe, damit Refactors über Next, MDX und meine Produkt-Repos kohärent bleiben.
+date: 2026-06-16
+draft: true
+---
+
+Bekommt ein Agent schlechten Kontext, schreibt er selbstsicheren, aber chaotischen Code. Mit gutem Kontext fühlt sich ein Nebenprojekt an, als hätte es ein kleines Team. Wenn ich eine zweisprachige Next-Site und mehrere Produkte allein pflege, zählt das, was ich um das Modell herum lege, genauso viel wie die Wahl des Modells.
+
+## Was „Kontext“ hier heißt
+
+Für mich ist das die Kombination aus Repo-Struktur, Namenskonventionen, verbotenen Mustern und kurzen Anweisungen, die Agenten wirklich lesen, plus das Briefing für jede Aufgabe.
+
+Dieses Repo hat aus gutem Grund eine `AGENTS.md` im Wurzelverzeichnis: Next.js 16 hat viele APIs geändert, und die Trainingsdaten der Modelle sind veraltet. Die Datei ist kurz und deutlich und schickt den Agenten zu den Docs, die mit der installierten Version kommen:
+
+```md title="AGENTS.md"
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all
+differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/`
+before writing any code. Heed deprecation notices.
+```
+
+Dieser eine Absatz verhindert eine ganze Klasse von Fehlern: `middleware.ts` statt `proxy.ts`, eine i18n-Bibliothek, wo `next/root-params` den Job schon erledigt, oder ein selbstsicherer Rewrite in den App Router vom letzten Jahr.
+
+Die übrigen Hausregeln sind billig zu formulieren und teuer, sie nach einem „hilfreichen“ Rewrite neu zu entdecken: Inhalte sind MDX mit Zod-geprüftem Frontmatter, UI sind standardmäßig Server Components, Wörterbücher sind serverseitiges JSON.
+
+## Briefings, die funktionieren
+
+Ich nenne Ziel, Constraints und was nicht angefasst werden darf. Eine Aufgabe pro Session schlägt ein vages „verbessere die Site“. Ein typisches Briefing sieht so aus:
+
+```md
+Goal: add a "Latest posts" section to the homepage.
+
+Constraints:
+- Reuse `Section` and `PostList`. No new list or card component.
+- Server Component only. No client state, no "use client".
+- Copy goes into both `messages/en.json` and `messages/de.json`.
+
+Out of scope: the i18n helpers, the header, anything in `lib/seo.ts`.
+Done when: `pnpm typecheck`, `pnpm lint` and `pnpm build` pass.
+```
+
+Geht die Aufgabe über Schichten, sage ich, welche im Scope ist: Content, UI oder Config. Alle drei in einem Prompt zu mischen ist der Weg zu „aufgeräumten“ Dateien, die niemand angefragt hat.
+
+## Verfall bekämpfen
+
+Kleine Diffs, typisierte Grenzen und ein Build, der bei schlechtem Input scheitert, halten Agenten in der Spur. Frontmatter ist das deutlichste Beispiel. Jeder Beitrag und jede Fallstudie läuft durch ein Zod-Schema, und ein Fehler stoppt den Build mit einer Meldung, die Datei und Feld nennt:
+
+```ts title="lib/content.ts"
+function parse<T extends z.ZodType>(schema: T, data: unknown, file: string): z.infer<T> {
+  const result = schema.safeParse(data);
+  if (!result.success) {
+    throw new Error(`Invalid frontmatter in content/${file}:\n${z.prettifyError(result.error)}`);
+  }
+  return result.data;
+}
+```
+
+```txt
+Invalid frontmatter in content/blog/de/mein-beitrag.mdx:
+✖ Too big: expected string to have <=160 characters
+  → at description
+```
+
+Das kann ein Agent lesen und selbst beheben. So will ich es haben: Das Repo gibt Feedback, ohne dass ich eingreifen muss.
+
+Vor dem Merge reviewe ich trotzdem, wie bei einem Kollegen. Ist der Agent abgedriftet, revertiere ich und schärfe das Briefing, statt einen Haufen Drive-by-Edits zu flicken.
+
+## Multi-Repo-Realität
+
+Diese Site, [MiniRemote](/de/portfolio/miniremote), [CupertinoUI](/de/portfolio/cupertino-ui) und [Shadcn Builder](/de/portfolio/shadcn-builder) teilen sich kein Monorepo. Jedes hat eigene Konventionen und eigene Agent-Hinweise. Ich erwarte nicht, dass ein Agent MiniRemotes MCP-Regeln im Kopf behält, während er eine Portfolio-MDX bearbeitet. Eine frische Session pro Repo funktioniert besser als ein langer Chat über mehrere Produkte.
+
+## Docs vs. Prompt
+
+Stabile Regeln gehören ins Repository: Struktur, Lint-Konfiguration, „lies die lokalen Next-Docs“. Aufgabenspezifische Absicht gehört in den Prompt. Einen Styleguide in jede Nachricht zu kopieren verschwendet das Kontextfenster. Wer „fass X nicht an“ vergisst, verliert schnell einen Nachmittag.
+
+Wer allein arbeitet, für den lohnt sich dieses Setup. Man schreibt es einmal, und jede Agent-Session startet mit den Standards, die man selbst durchsetzen würde.

@@ -1,0 +1,72 @@
+---
+title: Zero cookies, zero trackers, and I still know the site works
+description: Why iduspara.com ships with no analytics, and how I still catch broken pages and bad launches.
+date: 2025-06-24
+draft: true
+---
+
+"How many visitors?" is the wrong first question if the page is slow, broken or tracked to death. On iduspara.com I use **no cookies, no tracking and no analytics**.
+
+## What I ship today
+
+Fonts are self-hosted. There are no third-party embeds, no tag managers and no "privacy-friendly" analytics pixel that still phones home. The [privacy policy](/en/privacy) is short on purpose: there is almost nothing to disclose.
+
+The one thing the site remembers is your light or dark theme. It lives in `localStorage` on your device and is never sent anywhere. The theme provider is the stock `next-themes` setup, and that is all it needs:
+
+```tsx title="app/[locale]/layout.tsx"
+<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+  {children}
+</ThemeProvider>
+```
+
+One caveat: the site is hosted on Vercel, and like any host it writes technically necessary server logs (IP address, time, requested page) to deliver the site. That is in the privacy policy too. "No tracking" means I add nothing on top of what a web server needs to work.
+
+This keeps the GDPR story simple, removes the cookie banner, and protects the Lighthouse score. It also fits what I want a personal site to be: a place where you can read a blog post without being tracked.
+
+## What I lose, and what I don't need
+
+Without analytics I don't see funnels, referrers or scroll depth. For a portfolio and blog, those numbers rarely change a decision. I already know which products I want to highlight and which posts I want to write. Vanity counts would mostly distract me.
+
+Products are different. [CupertinoUI](/en/portfolio/cupertino-ui), [Gorivo.hr](/en/portfolio/gorivo) and [MiniRemote](/en/portfolio/miniremote) have users whose behaviour actually changes what I build next, so they do use analytics. This site does not.
+
+## How I measure in my products
+
+My products use PostHog, and in each of them it runs through a reverse proxy on the product's own domain. The browser never talks to a PostHog hostname directly. Events go to a first-party address and are forwarded from there:
+
+```ts
+posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+  // A first-party endpoint on the product's domain, not a PostHog hostname.
+  api_host: "https://e.example.com",
+  ui_host: "https://eu.posthog.com",
+});
+```
+
+The reason is reliability. Ad blockers and privacy extensions block well-known analytics hostnames, and a meaningful share of a technical audience runs one. Without the proxy, the numbers would be incomplete and skewed towards users who don't block anything. Those are usually not the people who use a tool like MiniRemote.
+
+The proxy is not a privacy feature, though. Routing data through my own domain changes where requests go, not what is collected or which rules apply. Consent and the privacy policy still have to match what the product actually measures. The proxy gives me more complete data. It doesn't change my obligations.
+
+The reasoning is the same as for this site. In the products, the numbers change decisions. On a personal site and blog they don't, so I don't collect them.
+
+## How I still know it works
+
+- **The build:** every route is prerendered, and invalid frontmatter or an accidentally dynamic page fails the build before it can reach production.
+- **Lighthouse:** run by hand on the key templates before changes to layout, fonts or images go out.
+- **Hosting:** if a Vercel deploy or DNS breaks, I see it in the deploy status, not in a visitor chart.
+- **Search:** Google Search Console tells me whether pages are indexed or have coverage errors. It only needs a verification meta tag, not a script on the page.
+- **People:** broken links and typos still arrive by email. That channel is enough at this scale.
+
+The Search Console tag is the only "third-party" thing in the `<head>`, and it is plain metadata. It is also optional: without the environment variable, nothing is rendered.
+
+```tsx title="app/[locale]/layout.tsx"
+verification: process.env.GOOGLE_SITE_VERIFICATION
+  ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+  : undefined,
+```
+
+## Options I considered and skipped
+
+I looked at privacy-first analytics that promise no cookies and only aggregated stats. Even the lightest script is still third-party JavaScript, another failure mode, and a reason to revisit the privacy policy. Until a metric would clearly change what I ship, the page stays free of measurement code.
+
+## Measure what changes decisions
+
+What I care about here is that pages load fast, stay accessible and show the products I build. I don't need a dashboard for that. When a product needs numbers, I add analytics to that product through its own domain, not to every page I write.

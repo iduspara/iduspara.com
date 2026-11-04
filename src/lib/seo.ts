@@ -12,7 +12,6 @@ interface BuildMetadataOptions {
   type?: "website" | "article" | "profile";
   publishedTime?: string;
   modifiedTime?: string;
-  tags?: string[];
   /** Locales in which this page exists. Defaults to all locales. */
   availableLocales?: readonly Locale[];
   /**
@@ -35,7 +34,6 @@ export function buildMetadata({
   type = "website",
   publishedTime,
   modifiedTime,
-  tags,
   availableLocales = locales,
   image = `/${locale}/opengraph-image`,
 }: BuildMetadataOptions): Metadata {
@@ -59,7 +57,7 @@ export function buildMetadata({
       canonical: localePath(locale, path),
       languages,
       types: {
-        "application/rss+xml": [{ url: `/${locale}/rss.xml`, title: `${siteConfig.name} — Blog` }],
+        "application/rss+xml": [{ url: `/${locale}/rss.xml`, title: `${siteConfig.name} · Blog` }],
       },
     },
     openGraph: {
@@ -71,7 +69,7 @@ export function buildMetadata({
       ...(title ? { title } : {}),
       description,
       ...(type === "article"
-        ? { publishedTime, modifiedTime, tags, authors: [siteConfig.url] }
+        ? { publishedTime, modifiedTime, authors: [siteConfig.url] }
         : {}),
       images: [{ url: image, width: 1200, height: 630 }],
     },

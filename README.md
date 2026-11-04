@@ -16,7 +16,7 @@ pnpm dev          # http://localhost:3000 → redirects to /en or /de
 | Script           | What it does                                |
 | ---------------- | ------------------------------------------- |
 | `pnpm dev`       | Start the dev server (Turbopack)            |
-| `pnpm build`     | Production build — fails on invalid content |
+| `pnpm build`     | Production build, fails on invalid content |
 | `pnpm start`     | Serve the production build                  |
 | `pnpm lint`      | ESLint                                      |
 | `pnpm typecheck` | Generate route types and run `tsc`          |
@@ -64,9 +64,8 @@ Create the same file name in both languages, e.g. `content/blog/en/my-post.mdx` 
 ```mdx
 ---
 title: My post
-description: One or two sentences, max. 200 characters.
+description: One or two sentences, 50–160 characters.
 date: 2026-11-04
-tags: ["react", "performance"]
 draft: true # drafts show in `pnpm dev` only
 ---
 
@@ -95,12 +94,12 @@ order: 6
 ---
 ```
 
-Frontmatter is validated with Zod — a mistake fails the build with a clear message.
+Frontmatter is validated with Zod, so a mistake fails the build with a clear message.
 
 ### MDX components
 
-- `<Callout title="…">…</Callout>` — highlighted note
-- `<Figure src="…" alt="…" width={1440} height={900} caption="…" />` — optimised image
+- `<Callout title="…">…</Callout>`: highlighted note
+- `<Figure src="…" alt="…" width={1440} height={900} caption="…" />`: optimised image
 
 ### CV data and UI text
 

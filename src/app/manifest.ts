@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${siteConfig.name} — Senior Front-End Developer`,
+    name: `${siteConfig.name} · Senior Front-End Developer`,
     short_name: siteConfig.shortName,
     description:
       "Portfolio and blog of Igor Duspara, senior front-end developer and product builder in Munich.",

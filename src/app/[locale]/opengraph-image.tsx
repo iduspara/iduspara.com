@@ -10,7 +10,7 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export const alt = "Igor Duspara — Senior Front-End Developer & Product Builder";
+export const alt = "Igor Duspara · Senior Front-End Developer & Product Builder";
 
 export default async function Image({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

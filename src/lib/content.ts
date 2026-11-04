@@ -29,7 +29,6 @@ const postSchema = z.object({
   description: metaDescription,
   date: isoDate,
   updated: isoDate.optional(),
-  tags: z.array(z.string()).default([]),
   draft: z.boolean().default(false),
 });
 
@@ -114,7 +113,7 @@ export async function getProject(locale: Locale, slug: string) {
   return projects.find((project) => project.meta.slug === slug);
 }
 
-/** Locales in which a given slug exists — used for hreflang and the language switcher. */
+/** Locales in which a given slug exists. Used for hreflang and the language switcher. */
 export async function getAvailableLocales(
   collection: "blog" | "portfolio",
   slug: string,
