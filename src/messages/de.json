@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "title": "Igor Duspara — Senior Front-End-Entwickler & Product Builder",
+    "description": "Ich bin Igor Duspara, Senior Front-End-Entwickler in München mit über {years} Jahren Erfahrung. Ich baue schnelle Web-Produkte und Apps wie MiniRemote.",
+    "ogAlt": "Igor Duspara — Senior Front-End-Entwickler & Product Builder"
+  },
+  "a11y": {
+    "skipToContent": "Zum Inhalt springen",
+    "mainNav": "Hauptnavigation",
+    "mobileNav": "Mobile Navigation",
+    "footerNav": "Fußzeilennavigation",
+    "languageNav": "Sprache",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "home": "Igor Duspara, Startseite",
+    "opensInNewTab": "(öffnet in neuem Tab)",
+    "socialLinks": "Soziale Profile"
+  },
+  "nav": {
+    "about": "Über mich",
+    "experience": "Erfahrung",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "contact": "Kontakt",
+    "ai": "KI"
+  },
+  "theme": {
+    "label": "Design",
+    "system": "System",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "switchTo": "Design wechseln (aktuell: {current})"
+  },
+  "hero": {
+    "eyebrow": "Hallo, ich bin Igor 👋",
+    "title": "Ich baue schnelle, durchdachte Produkte für das Web und den Mac.",
+    "lead": "Ich bin Senior Front-End-Entwickler bei Finanztip und lebe in München. In meiner Freizeit entwickle ich eigene Produkte wie MiniRemote, CupertinoUI und Shadcn Builder.",
+    "location": "München, Deutschland",
+    "ctaPrimary": "Meine Arbeiten",
+    "ctaSecondary": "Kontakt aufnehmen",
+    "avatarAlt": "Porträt von Igor Duspara"
+  },
+  "stats": {
+    "label": "Auf einen Blick",
+    "years": "Jahre Web-Entwicklung",
+    "products": "eigene Produkte gelauncht",
+    "frontend": "meiner Arbeit ist Front-End",
+    "stars": "GitHub-Sterne für Shadcn Builder"
+  },
+  "about": {
+    "title": "Über mich",
+    "paragraphs": [
+      "Ich entwickle seit 2006 für das Web. Angefangen habe ich als Full-Stack-Entwickler in Kroatien, danach war ich viele Jahre freiberuflich für Unternehmen wie CHECK24 tätig. Heute konzentriere ich mich auf das Front-End, dort, wo Design, Usability und Technik zusammenkommen.",
+      "Mir sind die Details wichtig, die man spürt, aber selten bemerkt: Seiten, die sofort laden, Oberflächen, die mit Tastatur und Screenreader funktionieren, und Code, den die nächste Entwicklerin gerne liest. Meine Erfahrung in SEO und Marketing hilft mir, Dinge zu bauen, die nicht nur gut gemacht sind, sondern auch gefunden und genutzt werden.",
+      "Neben meinem Job entwickle ich eigene Produkte. Ich mag es, den ganzen Weg selbst zu gehen: vom ersten Prototyp und dem Design bis zu Preisgestaltung, Launch und Support."
+    ]
+  },
+  "ai": {
+    "title": "Wie ich mit KI arbeite",
+    "lead": "KI ist fester Bestandteil meines Arbeitsalltags. Sie macht mich schneller, ersetzt aber kein Urteilsvermögen. Deshalb entscheide ich bewusst, wo ich sie einsetze und wo nicht.",
+    "principles": [
+      {
+        "title": "Agenten erledigen die Fleißarbeit, ich treffe die Entscheidungen",
+        "body": "Ich nutze Coding-Agenten für Grundgerüste, Refactorings, Migrationen, Tests und Dokumentation. Architektur, UX-Entscheidungen und das finale Review bleiben bei mir."
+      },
+      {
+        "title": "Derselbe Qualitätsanspruch für jede Zeile",
+        "body": "KI-generierter Code durchläuft dieselben Prüfungen wie meiner: strikte Typen, Linting, Tests, Barrierefreiheits-Checks und Performance-Budgets. Diese Seite ist genau so entstanden und erreicht 100 Punkte in Lighthouse."
+      },
+      {
+        "title": "Ich baue auch Produkte für Agenten",
+        "body": "MiniRemote bringt einen MCP-Server mit, über den Agenten wie Claude Code, Codex oder Cursor einen Mac bedienen können. CupertinoUI ist eine shadcn-Registry, aus der KI-Tools Komponenten installieren können."
+      },
+      {
+        "title": "Schneller von der Idee zum Launch",
+        "body": "KI ist ein wichtiger Grund, warum ich neben einem Vollzeitjob eigene Produkte entwerfen, entwickeln und launchen kann, vom ersten Prototyp bis zur Landingpage und Dokumentation."
+      }
+    ]
+  },
+  "experience": {
+    "title": "Erfahrung",
+    "lead": "Wo ich in den letzten {years} Jahren gearbeitet habe.",
+    "present": "Heute",
+    "current": "Aktuell"
+  },
+  "skills": {
+    "title": "Skills",
+    "lead": "Die Werkzeuge und Methoden, mit denen ich täglich arbeite, inklusive der KI-Tools in meinem Workflow."
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "lead": "Produkte, die ich selbst entworfen, entwickelt und gelauncht habe.",
+    "featured": "Ausgewählte Arbeiten",
+    "viewAll": "Alle Projekte ansehen",
+    "viewProject": "Zur Fallstudie",
+    "visit": "{name} besuchen",
+    "since": "Seit",
+    "role": "Meine Rolle",
+    "stack": "Stack",
+    "links": "Links",
+    "status": {
+      "active": "Aktiv",
+      "maintained": "Gepflegt",
+      "archived": "Archiviert"
+    },
+    "back": "Zurück zum Portfolio",
+    "metaTitle": "Portfolio: meine eigenen Produkte",
+    "metaDescription": "Fallstudien zu Produkten, die ich selbst entworfen, entwickelt und gelauncht habe: MiniRemote, CupertinoUI, Shadcn Builder, Gorivo.hr und Codeimg.io.",
+    "caseStudyTitle": "{name}: Fallstudie"
+  },
+  "blog": {
+    "title": "Blog",
+    "lead": "Notizen zu Front-End-Entwicklung, Performance und dem Bauen eigener Produkte.",
+    "latest": "Neueste Beiträge",
+    "viewAll": "Zum Blog",
+    "readMore": "Beitrag lesen",
+    "readingTime": "{minutes} Min. Lesezeit",
+    "published": "Veröffentlicht",
+    "updated": "Aktualisiert",
+    "empty": "Ich arbeite gerade an meinen ersten Beiträgen. Schau bald wieder vorbei.",
+    "back": "Zurück zum Blog",
+    "rss": "RSS-Feed",
+    "metaTitle": "Blog über Front-End und Performance",
+    "metaDescription": "Ich schreibe über Front-End-Entwicklung, Web-Performance, Barrierefreiheit und das Bauen eigener Produkte mit React, Next.js und KI."
+  },
+  "contact": {
+    "title": "Lass uns zusammenarbeiten",
+    "lead": "Du hast ein Projekt, eine Frage oder möchtest einfach Hallo sagen? Ich antworte meist innerhalb weniger Tage.",
+    "email": "Schreib mir",
+    "orFind": "Du findest mich auch auf"
+  },
+  "footer": {
+    "rights": "Alle Rechte vorbehalten.",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "builtWith": "Ich habe diese Seite mit Next.js, Tailwind CSS und shadcn/ui gebaut."
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "lead": "Ich konnte die gesuchte Seite leider nicht finden. Vielleicht wurde sie verschoben oder hat nie existiert.",
+    "home": "Zur Startseite"
+  },
+  "imprint": {
+    "title": "Impressum",
+    "lead": "Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz).",
+    "metaDescription": "Impressum von iduspara.com: wer für diese Website verantwortlich ist, wie du mich erreichst und wie ich für Inhalte, Links und Urheberrecht hafte."
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "lead": "Wie ich mit deinen Daten auf dieser Website umgehe.",
+    "metaDescription": "Wie ich mit deinen Daten auf iduspara.com umgehe: keine Cookies, kein Tracking, keine Analyse. Details zu Hosting, E-Mail-Kontakt und deinen DSGVO-Rechten."
+  }
+}

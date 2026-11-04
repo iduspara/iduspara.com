@@ -1,0 +1,40 @@
+---
+title: Was mich 20 Jahre Front-End über Performance gelehrt haben
+description: Die Performance-Lektionen, die jedes Framework überlebt haben, das ich seit 2006 genutzt habe, von jQuery bis React Server Components.
+date: 2026-10-28
+tags: ["performance", "web-vitals", "karriere"]
+draft: false
+---
+
+Meine erste Website für einen Kunden habe ich 2006 geschrieben. Seitdem habe ich jQuery-Plugins, Zend-Framework-Anwendungen, Vue- und Nuxt-Seiten und heute vor allem React ausgeliefert. Frameworks kommen und gehen, aber ein paar Performance-Lektionen sind die ganze Zeit gültig geblieben.
+
+## 1. Der schnellste Code ist der, den ich nicht ausliefere
+
+Jedes Kilobyte JavaScript muss heruntergeladen, geparst und ausgeführt werden, und zwar auf dem langsamsten Smartphone meiner Besucher. Bevor ich eine Bibliothek hinzufüge, frage ich mich, ob HTML und CSS die Aufgabe übernehmen können. Erstaunlich oft können sie das: `<details>` für Aufklappbereiche, CSS für Animationen, native Formularvalidierung für einfache Formulare.
+
+## 2. Bilder bringen meist den größten Gewinn
+
+Auf fast jeder Seite, die ich analysiert habe, waren Bilder der größte Teil. Moderne Formate wie AVIF, korrekte `sizes`-Attribute und feste Abmessungen lösen das meiste davon, und feste Abmessungen verhindern zusätzlich Layout-Verschiebungen.
+
+```html
+<img
+  src="/cover.avif"
+  width="1440"
+  height="900"
+  sizes="(min-width: 1024px) 480px, 100vw"
+  alt="Eine kurze Beschreibung des Bildinhalts"
+  loading="lazy"
+/>
+```
+
+## 3. Auf echten Geräten messen
+
+Lighthouse auf meinem MacBook ist der Idealfall. Ich teste auf einem Android-Mittelklasse-Smartphone mit gedrosseltem Netz und schaue mir, wann immer möglich, Felddaten echter Nutzer an.
+
+## 4. Barrierefreiheit und Performance gehören zusammen
+
+Semantisches HTML wird schneller gerendert, ist für Screenreader einfacher und besser für Suchmaschinen. Ein echtes `<button>` schlägt ein `<div>` mit drei Event-Listenern jedes Mal.
+
+## 5. Performance ist eine Gewohnheit, kein Projekt
+
+Schnell bleiben die Seiten, bei denen Performance Teil jedes Pull Requests ist und nicht ein großes Aufräumen einmal im Jahr. Ein Performance-Budget in der CI ist eines der günstigsten Werkzeuge, die ich kenne.

@@ -1,0 +1,40 @@
+---
+title: What 20 years of front-end taught me about performance
+description: The performance lessons that have survived every framework I've used since 2006, from jQuery to React Server Components.
+date: 2026-10-28
+tags: ["performance", "web-vitals", "career"]
+draft: false
+---
+
+I wrote my first production website in 2006. Since then I've shipped jQuery plugins, Zend Framework apps, Vue and Nuxt sites, and today mostly React. Frameworks come and go, but a few performance lessons have stayed true the whole time.
+
+## 1. The fastest code is the code I don't ship
+
+Every kilobyte of JavaScript has to be downloaded, parsed and executed, on the slowest phone my visitors own. Before I add a library, I ask whether HTML and CSS can do the job. Surprisingly often, they can: `<details>` for disclosures, CSS for animations, native form validation for simple forms.
+
+## 2. Images are usually the biggest win
+
+On almost every site I've audited, images were the largest part of the page. Modern formats like AVIF, correct `sizes` attributes and explicit dimensions fix most of it, and explicit dimensions also prevent layout shift.
+
+```html
+<img
+  src="/cover.avif"
+  width="1440"
+  height="900"
+  sizes="(min-width: 1024px) 480px, 100vw"
+  alt="A short description of what's in the image"
+  loading="lazy"
+/>
+```
+
+## 3. Measure on real devices
+
+Lighthouse on my MacBook is a best case. I test on a mid-range Android phone with throttled network, and I look at field data from real users whenever I can.
+
+## 4. Accessibility and performance go together
+
+Semantic HTML is faster to render, easier for screen readers and better for search engines. A real `<button>` beats a `<div>` with three event listeners every time.
+
+## 5. Performance is a habit, not a project
+
+The sites that stay fast are the ones where performance is part of every pull request, not a big clean-up once a year. A performance budget in CI is one of the cheapest tools I know.

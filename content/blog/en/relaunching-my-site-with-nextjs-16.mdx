@@ -1,0 +1,49 @@
+---
+title: Relaunching my site with Next.js 16
+description: Why I rebuilt iduspara.com from a single Nuxt CV page into a bilingual portfolio and blog with Next.js 16, Tailwind CSS 4 and shadcn/ui.
+date: 2026-11-04
+tags: ["nextjs", "react", "performance"]
+draft: false
+---
+
+My old homepage was a single German CV page I built with Nuxt a few years ago. It did its job, but it no longer showed what I actually spend my time on: building my own products. So I rebuilt it from scratch.
+
+## What I wanted
+
+- **A portfolio** for my products, like [MiniRemote](/en/portfolio/miniremote) and [CupertinoUI](/en/portfolio/cupertino-ui).
+- **A blog** where I can write about front-end engineering.
+- **English and German**, with proper `hreflang` tags.
+- **A perfect Lighthouse score**, because performance is part of my craft, not an afterthought.
+
+## The stack
+
+I went with **Next.js 16** and the App Router, **Tailwind CSS 4** and **shadcn/ui** on top of Base UI. Every page is a Server Component by default and is fully prerendered at build time. I enforce that with a single line in the root layout:
+
+```tsx title="app/[locale]/layout.tsx"
+/** Every route must be fully prerendered at build time. */
+export const ensureStatic = "navigation";
+```
+
+If I ever accidentally read a cookie or a header somewhere, the build fails instead of quietly making the page dynamic.
+
+## Internationalisation without a library
+
+Next.js 16 can read the locale from the root segment anywhere on the server with `next/root-params`. That means I don't need an i18n library at all. My dictionaries are plain JSON files that never reach the browser:
+
+```ts title="i18n/dictionaries.ts"
+import { locale as localeParam } from "next/root-params";
+
+export async function getLocale() {
+  const value = await localeParam();
+  if (!hasLocale(value)) notFound();
+  return value;
+}
+```
+
+## Content as MDX
+
+Blog posts and case studies live as MDX files in the repository. I validate their frontmatter with Zod, so a typo breaks the build instead of the page. Syntax highlighting runs at build time with Shiki, so this code block costs zero client-side JavaScript.
+
+## Shipping less JavaScript
+
+The only interactive pieces are the theme toggle, the mobile menu and the language links. Everything else is HTML and CSS. That's the whole secret behind the score.
