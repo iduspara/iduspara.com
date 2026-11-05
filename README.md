@@ -24,6 +24,8 @@ pnpm dev          # http://localhost:3000 → redirects to /en or /de
 
 Set `NEXT_PUBLIC_SITE_URL` if the site runs anywhere other than `https://iduspara.com` (used for canonical URLs, sitemap, RSS and Open Graph).
 
+Analytics run on PostHog, initialized in `src/components/layout/posthog-provider.tsx`. Set `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` and `NEXT_PUBLIC_POSTHOG_HOST` in `.env.local` and in Vercel. Without a token, PostHog is not loaded.
+
 ## Project structure
 
 ```
