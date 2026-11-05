@@ -13,6 +13,13 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
     posthog.init(token, {
       api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
       defaults: "2026-08-30",
+      // Privacy settings described in content/pages/*/privacy.mdx. Keep both in sync.
+      // No cookies, localStorage or sessionStorage. Requires cookieless mode in the project settings.
+      cookieless_mode: "always",
+      respect_dnt: true,
+      disable_session_recording: true,
+      disable_surveys: true,
+      enable_heatmaps: false,
     });
   }, []);
 
