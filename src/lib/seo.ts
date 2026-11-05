@@ -21,11 +21,30 @@ interface BuildMetadataOptions {
   image?: string;
 }
 
-/** Builds consistent metadata with canonical URLs, hreflang alternates and Open Graph tags. */
 /** Google shows roughly 60 characters of a title. */
 const MAX_TITLE_LENGTH = 60;
 const TITLE_SUFFIX = ` · ${siteConfig.name}`;
 
+/** Maps each available locale to its URL, plus an x-default entry where one applies. */
+function buildLanguageAlternates(path: AppPath, availableLocales: readonly Locale[]) {
+  const languages: Record<string, string> = {};
+  for (const l of availableLocales) languages[localeTags[l].lang] = localePath(l, path);
+  // x-default points to the language-neutral URL, which redirects by Accept-Language.
+  if (availableLocales.length === locales.length) {
+    languages["x-default"] = path || "/";
+  } else if (availableLocales.includes(defaultLocale)) {
+    languages["x-default"] = localePath(defaultLocale, path);
+  }
+  return languages;
+}
+
+/** Drops the " · Igor Duspara" suffix when it would be cut off in search results. */
+function buildDocumentTitle(title: string | undefined): Metadata["title"] {
+  if (!title) return undefined;
+  return title.length + TITLE_SUFFIX.length > MAX_TITLE_LENGTH ? { absolute: title } : title;
+}
+
+/** Builds consistent metadata with canonical URLs, hreflang alternates and Open Graph tags. */
 export function buildMetadata({
   locale,
   path = "",
@@ -37,18 +56,8 @@ export function buildMetadata({
   availableLocales = locales,
   image = `/${locale}/opengraph-image`,
 }: BuildMetadataOptions): Metadata {
-  const languages: Record<string, string> = {};
-  for (const l of availableLocales) languages[localeTags[l].lang] = localePath(l, path);
-  // x-default points to the language-neutral URL, which redirects by Accept-Language.
-  if (availableLocales.length === locales.length) {
-    languages["x-default"] = path || "/";
-  } else if (availableLocales.includes(defaultLocale)) {
-    languages["x-default"] = localePath(defaultLocale, path);
-  }
-
-  // Drop the " · Igor Duspara" suffix when it would be cut off in search results.
-  const documentTitle =
-    title && title.length + TITLE_SUFFIX.length > MAX_TITLE_LENGTH ? { absolute: title } : title;
+  const languages = buildLanguageAlternates(path, availableLocales);
+  const documentTitle = buildDocumentTitle(title);
 
   return {
     ...(documentTitle ? { title: documentTitle } : {}),
@@ -68,9 +77,7 @@ export function buildMetadata({
       url: localePath(locale, path),
       ...(title ? { title } : {}),
       description,
-      ...(type === "article"
-        ? { publishedTime, modifiedTime, authors: [siteConfig.url] }
-        : {}),
+      ...(type === "article" ? { publishedTime, modifiedTime, authors: [siteConfig.url] } : {}),
       images: [{ url: image, width: 1200, height: 630 }],
     },
     twitter: {
