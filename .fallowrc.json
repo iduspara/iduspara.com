@@ -1,0 +1,27 @@
+{
+  // This file is JSONC: fallow reads these comments; generic JSON tools may not.
+  "$schema": "./node_modules/fallow/schema.json",
+  // Entry points come from the Next.js plugin (src/app/**, src/proxy.ts, next.config.ts).
+  "ignorePatterns": [
+    // MDX content is read from disk by src/lib/content.ts, never imported.
+    "content/**"
+  ],
+  "ignoreExports": [
+    // Next.js route segment config and static params, consumed by the framework.
+    { "file": "src/app/**/layout.tsx", "exports": ["ensureStatic"] },
+    { "file": "src/app/**/route.ts", "exports": ["generateStaticParams"] }
+  ],
+  "ignoreDependencies": [
+    // Referenced as a string loader in next.config.ts.
+    "@tailwindcss/turbopack"
+  ],
+  "duplicates": {
+    // Hide pair-only clones; focus on widespread copy-paste
+    // worth refactoring. Lower to 2 to report every duplicate pair.
+    "minOccurrences": 3
+  },
+  "rules": {
+    // Tailwind plugins are build-time CSS imports, so devDependencies is correct.
+    "dev-dependencies-in-production": "off"
+  }
+}

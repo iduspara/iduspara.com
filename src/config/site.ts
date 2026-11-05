@@ -14,5 +14,3 @@ export const siteConfig = {
     productHunt: "https://www.producthunt.com/@iduspara",
   },
 } as const;
-
-export type SiteConfig = typeof siteConfig;

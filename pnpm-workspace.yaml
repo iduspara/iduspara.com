@@ -2,3 +2,6 @@ allowBuilds:
   sharp: false
   unrs-resolver: false
   core-js: false
+permissions:
+  fallow:
+    skills: true
